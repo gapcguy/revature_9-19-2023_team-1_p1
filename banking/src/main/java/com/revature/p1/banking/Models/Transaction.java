@@ -23,6 +23,14 @@ public class Transaction {
     @Column(unique = false, nullable = false)
     private Timestamp transactionDateTime;
 
+    @OneToOne
+    @JoinColumn(name = "fromAccountIdFk")
+    private Account fromAccount;
+
+    @OneToOne
+    @JoinColumn(name = "toAccountIdFk")
+    private Account toAccount;
+
     public Transaction() {}
 
     public Transaction(int accountNum, BigDecimal transactionAmount, Timestamp transactionDateTime) {

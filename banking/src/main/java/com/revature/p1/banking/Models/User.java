@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name="customers")
 @Component
-public class Customer {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,14 +28,14 @@ public class Customer {
     @Column(nullable = false, unique = false)
     private String lastName;
 
-    public Customer() {}
+    public User() {}
 
-    public Customer(String username, String password) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public Customer(String username, String password, int accountNum, String firstName, String lastName) {
+    public User(String username, String password, int accountNum, String firstName, String lastName) {
         this.username = username;
         this.password = password;
         this.accountNum = accountNum;

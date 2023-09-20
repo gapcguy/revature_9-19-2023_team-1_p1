@@ -1,7 +1,7 @@
 package com.revature.p1.banking.Controller;
 
-import com.revature.p1.banking.DAO.CustomerDAO;
-import com.revature.p1.banking.Models.Customer;
+import com.revature.p1.banking.DAO.UserDAO;
+import com.revature.p1.banking.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,21 +11,21 @@ import java.util.List;
 @RestController
 @RequestMapping("/customers")
 @CrossOrigin
-public class CustomerController {
+public class UserController {
 
-    private CustomerDAO cDAO;
+    private UserDAO cDAO;
 
     @Autowired
-    public CustomerController(CustomerDAO cDAO) { this.cDAO = cDAO; }
+    public UserController(UserDAO cDAO) { this.cDAO = cDAO; }
 
     @GetMapping
-    public ResponseEntity<List<Customer>> getAllCustomers() {
+    public ResponseEntity<List<User>> getAllCustomers() {
         return ResponseEntity.ok().body(cDAO.findAll());
     }
 
     @PostMapping
-    public ResponseEntity<Customer> addCustomer(@RequestBody Customer c) {
-        Customer newCust = cDAO.save(c);
+    public ResponseEntity<User> addCustomer(@RequestBody User c) {
+        User newCust = cDAO.save(c);
 
         if( newCust == null) { return ResponseEntity.badRequest().build(); }
 
@@ -33,10 +33,10 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable("id") int id) {
+    public ResponseEntity<User> getCustomerById(@PathVariable("id") int id) {
         if (id <= 0) { return ResponseEntity.badRequest().build(); }
 
-        Customer c = cDAO.getReferenceById(id);
+        User c = cDAO.getReferenceById(id);
 
         if( c == null ) { return ResponseEntity.noContent().build(); }
 
@@ -44,9 +44,9 @@ public class CustomerController {
     }
 
     @PutMapping
-    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer c) {
-        Customer updatedCustomer = cDAO.saveAndFlush(c);
+    public ResponseEntity<User> updateCustomer(@RequestBody User c) {
+        User updatedUser = cDAO.saveAndFlush(c);
 
-        return ResponseEntity.accepted().body(updatedCustomer);
+        return ResponseEntity.accepted().body(updatedUser);
     }
 }

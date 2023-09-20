@@ -9,43 +9,43 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/users")
 @CrossOrigin
 public class UserController {
 
-    private UserDAO cDAO;
+    private UserDAO uDAO;
 
     @Autowired
-    public UserController(UserDAO cDAO) { this.cDAO = cDAO; }
+    public UserController(UserDAO cDAO) { this.uDAO = cDAO; }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllCustomers() {
-        return ResponseEntity.ok().body(cDAO.findAll());
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok().body(uDAO.findAll());
     }
 
     @PostMapping
-    public ResponseEntity<User> addCustomer(@RequestBody User c) {
-        User newCust = cDAO.save(c);
+    public ResponseEntity<User> addUser(@RequestBody User c) {
+        User newUser = uDAO.save(c);
 
-        if( newCust == null) { return ResponseEntity.badRequest().build(); }
+        if( newUser == null) { return ResponseEntity.badRequest().build(); }
 
-        return ResponseEntity.accepted().body(newCust);
+        return ResponseEntity.accepted().body(newUser);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getCustomerById(@PathVariable("id") int id) {
+    public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
         if (id <= 0) { return ResponseEntity.badRequest().build(); }
 
-        User c = cDAO.getReferenceById(id);
+        User u = uDAO.getReferenceById(id);
 
-        if( c == null ) { return ResponseEntity.noContent().build(); }
+        if( u == null ) { return ResponseEntity.noContent().build(); }
 
-        return ResponseEntity.ok().body(c);
+        return ResponseEntity.ok().body(u);
     }
 
     @PutMapping
-    public ResponseEntity<User> updateCustomer(@RequestBody User c) {
-        User updatedUser = cDAO.saveAndFlush(c);
+    public ResponseEntity<User> updateUser(@RequestBody User c) {
+        User updatedUser = uDAO.saveAndFlush(c);
 
         return ResponseEntity.accepted().body(updatedUser);
     }

@@ -23,7 +23,7 @@ public class Account {
     private BigDecimal balance;
 
     @ManyToMany
-    @JoinColumn(name = "userIdFk")
+    @JoinColumn(name = "userIdFk", referencedColumnName = "id")
     private User user;
 
     public long getAccountId() {

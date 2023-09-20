@@ -1,4 +1,10 @@
 package com.revature.p1.banking.DAO;
 
-public interface AccountDAO {
+import com.revature.p1.banking.Models.Account;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface AccountDAO extends JpaRepository<Account, Integer>{
+
 }

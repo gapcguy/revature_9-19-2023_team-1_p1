@@ -17,12 +17,12 @@ public class Loan {
     @Column(unique = false, nullable = false)
     @OneToOne
     @JoinColumn(name = "accountIdFk", referencedColumnName = "id")
-    private User recipientUser;
+    private long recipientAccount;
 
     @Column(unique = false, nullable = true)
     @OneToOne
     @JoinColumn(name = "approvalAccountIdFk", referencedColumnName = "id")
-    private User approvedByUser;
+    private User approvedByAccount;
 
 
     @Column(unique = false, nullable = false)
@@ -37,8 +37,8 @@ public class Loan {
 
     public Loan() {}
 
-    public Loan(Account recipientUser, BigDecimal loanAmount, Timestamp loanDateTime) {
-        this.recipientUser = recipientUser.getUser();
+    public Loan(Account recipientAccount, BigDecimal loanAmount, Timestamp loanDateTime) {
+        this.recipientAccount = recipientAccount.getAccountId();
         this.loanAmount = loanAmount;
         this.loanDateTime = loanDateTime;
     }
@@ -51,20 +51,20 @@ public class Loan {
         this.loanId = loanId;
     }
 
-    public User getRecipientUser() {
-        return recipientUser;
+    public long getRecipientAccount() {
+        return recipientAccount;
     }
 
-    public void setRecipientUser(User recipientUser) {
-        this.recipientUser = recipientUser;
+    public void setRecipientUser(long recipientAccount) {
+        this.recipientAccount = recipientAccount;
     }
 
-    public User getApprovedByUser() {
-        return approvedByUser;
+    public User getApprovedByAccount() {
+        return approvedByAccount;
     }
 
-    public void setApprovedByUser(User approvedByUser) {
-        this.approvedByUser = approvedByUser;
+    public void setApprovedByUser(User approvedByAccount) {
+        this.approvedByAccount = approvedByAccount;
     }
 
     public BigDecimal getLoanAmount() {
@@ -95,8 +95,8 @@ public class Loan {
     public String toString() {
         return "Loan{" +
                 "loanId=" + loanId +
-                ", recipientUser=" + recipientUser +
-                ", approvedByUser=" + approvedByUser +
+                ", recipientAccount=" + recipientAccount +
+                ", approvedByAccount=" + approvedByAccount +
                 ", loanAmount=" + loanAmount +
                 ", loanDateTime=" + loanDateTime +
                 ", approved=" + approved +

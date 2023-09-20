@@ -21,9 +21,8 @@ public class Loan {
 
     @Column(unique = false, nullable = true)
     @OneToOne
-    @JoinColumn(name = "accountIdFk")
+    @JoinColumn(name = "approvalAccountIdFk")
     private int approvedBy;
-
 
 
     @Column(unique = false, nullable = false)
@@ -35,10 +34,6 @@ public class Loan {
 
     @Column(unique = false, nullable = false)
     private boolean approved = false;
-
-
-
-
 
     public Loan() {}
 

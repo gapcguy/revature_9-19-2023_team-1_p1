@@ -27,6 +27,8 @@ public class Transaction {
     @JoinColumn(name = "fromAccountIdFk")
     private Account fromAccount;
 
+
+    // Foreign keys: TODO: EVALUATE FOR PROPER MULTIPLICITY
     @OneToOne
     @JoinColumn(name = "toAccountIdFk")
     private Account toAccount;

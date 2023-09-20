@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test;
 
 public class BankControllerTests {
     @BeforeAll
-    void setup(){
+    static void setup(){
 
     }
 
     @AfterAll
-    void close(){
+    static void close(){
 
     }
 

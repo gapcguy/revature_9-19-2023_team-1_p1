@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 
 public class BankServiceTests {
     @BeforeAll
-    void setup(){
+    static void setup(){
 
     }
 
     @AfterAll
-    void close(){
+    static void close(){
 
     }
 

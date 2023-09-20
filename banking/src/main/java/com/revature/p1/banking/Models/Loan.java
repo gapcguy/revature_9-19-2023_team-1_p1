@@ -95,4 +95,16 @@ public class Loan {
     public void setApproved(boolean approved) {
         this.approved = approved;
     }
+
+    @Override
+    public String toString() {
+        return "Loan{" +
+                "loanId=" + loanId +
+                ", accountNum=" + accountNum +
+                ", approvedBy=" + approvedBy +
+                ", loanAmount=" + loanAmount +
+                ", loanDateTime=" + loanDateTime +
+                ", approved=" + approved +
+                '}';
+    }
 }

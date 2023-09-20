@@ -40,4 +40,64 @@ public class Transaction {
         this.transactionAmount = transactionAmount;
         this.transactionDateTime = transactionDateTime;
     }
+
+    public long getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(long transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public int getAccountNum() {
+        return accountNum;
+    }
+
+    public void setAccountNum(int accountNum) {
+        this.accountNum = accountNum;
+    }
+
+    public BigDecimal getTransactionAmount() {
+        return transactionAmount;
+    }
+
+    public void setTransactionAmount(BigDecimal transactionAmount) {
+        this.transactionAmount = transactionAmount;
+    }
+
+    public Timestamp getTransactionDateTime() {
+        return transactionDateTime;
+    }
+
+    public void setTransactionDateTime(Timestamp transactionDateTime) {
+        this.transactionDateTime = transactionDateTime;
+    }
+
+    public Account getFromAccount() {
+        return fromAccount;
+    }
+
+    public void setFromAccount(Account fromAccount) {
+        this.fromAccount = fromAccount;
+    }
+
+    public Account getToAccount() {
+        return toAccount;
+    }
+
+    public void setToAccount(Account toAccount) {
+        this.toAccount = toAccount;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "transactionId=" + transactionId +
+                ", accountNum=" + accountNum +
+                ", transactionAmount=" + transactionAmount +
+                ", transactionDateTime=" + transactionDateTime +
+                ", fromAccount=" + fromAccount +
+                ", toAccount=" + toAccount +
+                '}';
+    }
 }

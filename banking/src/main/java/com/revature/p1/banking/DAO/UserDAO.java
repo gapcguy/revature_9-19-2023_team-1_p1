@@ -16,6 +16,17 @@ import java.util.Optional;
 @Repository
 public interface UserDAO extends JpaRepository<User, Integer> {
 
+    /* Extending the JpaRepository will give us a bunch of methods out of the box. See this custom DAO method below:
+
+        We want to be able to find an employee by username. Unfortunately, Spring Data only knows the primary key;
+        therefore, we need to define our own. Spring Data *is* smart enough to implement this method for us -- we
+        merely define the abstraction.  */
     public Optional<User> findByUsername(String username);
 
+    /* How this works:
+        By having a method name starting with "findBy", and ending in the variable you want to find. Spring needs
+        a method name to be in camelCase, or it will throw very vague errors. Also, it cannot have underscores.  */
+
+     /* There are a lot of options for custom DAO methods. Look into things like native queries if you really need
+        specific DAO methods.  */
 }

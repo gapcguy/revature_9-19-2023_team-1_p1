@@ -16,21 +16,11 @@ public class UserService {
 
     public UserService() {}
     @Autowired
-    public UserService(UserDAO userDAO){
-        this.userDAO = userDAO;  }
+    public UserService(UserDAO userDAO){  this.userDAO = userDAO;  }
 
-    public List<User> findAll(){
-        return userDAO.findAll();
-    }
-
-    public User save(User u){
-        return userDAO.save(u);
-    }
-
-    public User findById(int id){
-        return userDAO.getReferenceById(id);
-    }
-
+    public List<User> findAll(){ return userDAO.findAll();  }
+    public User save(User u){ return userDAO.save(u); }
+    public User findById(int id){ return userDAO.getReferenceById(id); }
     public User findByUsername(String username) {
         if (username.equals(null) || username.equals("")) {
             throw new IllegalArgumentException("Cannot find a user without a username");
@@ -39,11 +29,8 @@ public class UserService {
         Optional<User> u = userDAO.findByUsername(username);
 
         // If the returned user is present in the optional,
-        if(u.isPresent()) {
-            return u.get();
-        } else {
-            throw new IllegalArgumentException();
-        }
+        if(u.isPresent()) { return u.get(); }
+        else              { throw new IllegalArgumentException(); }
     }
 
     public User updateEntireUser(User u) {

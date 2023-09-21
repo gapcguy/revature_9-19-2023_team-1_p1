@@ -73,8 +73,8 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<User> deleteUserById(@PathVariable("id") int id) {
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable("id") int id) {
         if (id <= 0 ) { return ResponseEntity.badRequest().build(); }
 
         User deletedUser = uServ.deleteById(id);

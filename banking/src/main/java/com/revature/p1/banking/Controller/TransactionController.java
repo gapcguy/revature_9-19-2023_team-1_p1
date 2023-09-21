@@ -17,7 +17,7 @@ public class TransactionController {
     private TransactionService tServ;
 
     @Autowired
-    public TransactionController(TransactionService tServ) { this.tServ = tServ;}
+    public TransactionController(TransactionService tServ) { this.tServ = tServ; }
 
     @GetMapping
     public ResponseEntity<List<Transaction>> getAllTransactions() {

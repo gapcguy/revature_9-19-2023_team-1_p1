@@ -30,48 +30,63 @@ public class User {
     private Role role;
 
 
-    public User() {}
+    public User() {
+    }
 
-    public User(String username, String password) {
+    public User(int userId, String username, String password, String firstName, String lastName, Role role) {
+        this.userId = userId;
         this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public User(String username, String password, Role role) {
-        this.username = username;
-        this.password = password;
-        this.role     = role;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public User(String username, String password, Account accountNum, String firstName, String lastName) {
-        this.username   = username;
-        this.password   = password;
-        this.firstName  = firstName;
-        this.lastName   = lastName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public int getUserId      ()                 { return userId;     }
-    public String getUsername ()                 { return username;   }
-    public String getPassword ()                 { return password;   }
-    public String getFirstName()                 { return firstName;  }
-    public String getLastName ()                 { return lastName;   }
-    public Role getRole       ()                 { return role;       }
-    public void setUserId     (int customerId)   { this.userId = customerId;     }
-    public void setUsername   (String username)  { this.username = username;     }
-    public void setPassword   (String password)  { this.password = password;     }
+    public String getLastName() {
+        return lastName;
+    }
 
-    public void setFirstName  (String firstName) { this.firstName = firstName;   }
-    public void setLastName   (String lastName)  { this.lastName = lastName;     }
-    public void setRole       (Role role)        { this.role = role;             }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "customerId=" + userId +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

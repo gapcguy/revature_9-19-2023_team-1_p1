@@ -25,8 +25,8 @@ public class User {
     @Column(nullable = false, unique = false)
     private String lastName;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "roleId")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "roleId", nullable = true)
     private Role role;
 
 
@@ -43,7 +43,7 @@ public class User {
         this.role     = role;
     }
 
-    public User(String username, String password, Account accountNum, String firstName, String lastName) {
+    public User(String username, String password, String firstName, String lastName) {
         this.username   = username;
         this.password   = password;
         this.firstName  = firstName;

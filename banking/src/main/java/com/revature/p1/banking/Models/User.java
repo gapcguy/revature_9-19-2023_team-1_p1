@@ -1,7 +1,6 @@
 package com.revature.p1.banking.Models;
 
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Component;
 
 @Entity

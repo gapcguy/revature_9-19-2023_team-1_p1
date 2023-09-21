@@ -1,7 +1,6 @@
 package com.revature.p1.banking.Models;
 
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -14,14 +13,13 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long loanId;
 
-    @Column(unique = false, nullable = false)
     @OneToOne
-    @JoinColumn(name = "accountIdFk", referencedColumnName = "id")
-    private long recipientAccount;
+    @JoinColumn(name = "accountIdFk", referencedColumnName = "accountId")
+    private Account recipientAccount;
 
-    @Column(unique = false, nullable = true)
+
     @OneToOne
-    @JoinColumn(name = "approvalAccountIdFk", referencedColumnName = "id")
+    @JoinColumn(name = "approvalAccountIdFk", referencedColumnName = "userId")
     private User approvedByAccount;
 
 
@@ -38,7 +36,7 @@ public class Loan {
     public Loan() {}
 
     public Loan(Account recipientAccount, BigDecimal loanAmount, Timestamp loanDateTime) {
-        this.recipientAccount = recipientAccount.getAccountId();
+        this.recipientAccount = recipientAccount;
         this.loanAmount = loanAmount;
         this.loanDateTime = loanDateTime;
     }
@@ -51,11 +49,11 @@ public class Loan {
         this.loanId = loanId;
     }
 
-    public long getRecipientAccount() {
+    public Account getRecipientAccount() {
         return recipientAccount;
     }
 
-    public void setRecipientUser(long recipientAccount) {
+    public void setRecipientUser(Account recipientAccount) {
         this.recipientAccount = recipientAccount;
     }
 

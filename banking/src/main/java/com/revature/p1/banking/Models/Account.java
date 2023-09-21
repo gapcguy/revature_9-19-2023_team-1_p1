@@ -1,7 +1,6 @@
 package com.revature.p1.banking.Models;
 
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -22,15 +21,15 @@ public class Account {
     @Column(nullable = false, unique = false)
     private BigDecimal balance;
 
-    @ManyToMany
-    @JoinColumn(name = "userIdFk", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "userIdFk", referencedColumnName = "userId")
     private User user;
 
     public long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(long accountId) {
+    public void setAccountId(int accountId) {
         this.accountId = accountId;
     }
 

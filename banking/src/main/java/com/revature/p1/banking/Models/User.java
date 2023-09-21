@@ -4,9 +4,6 @@ import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name="customers")
 @Component
@@ -46,32 +43,31 @@ public class User {
     public User(String username, String password, Role role) {
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.role     = role;
     }
-
 
     public User(String username, String password, int accountNum, String firstName, String lastName) {
-        this.username = username;
-        this.password = password;
+        this.username   = username;
+        this.password   = password;
         this.accountNum = accountNum;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstName  = firstName;
+        this.lastName   = lastName;
     }
 
-    public int getUserId() { return userId; }
-    public String getUsername() { return username; }
-    public String getPassword() { return password; }
-    public int getAccountNum() { return accountNum; }
-    public String getFirstName() { return firstName; }
-    public String getLastName() { return lastName; }
-    public Role getRole() { return role; }
-    public void setUserId(int customerId) { this.userId = customerId; }
-    public void setUsername(String username) { this.username = username; }
-    public void setPassword(String password) { this.password = password; }
-    public void setAccountNum(int accountNum) { this.accountNum = accountNum; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
-    public void setRole(Role role) { this.role = role; }
+    public int getUserId      ()                 { return userId;     }
+    public String getUsername ()                 { return username;   }
+    public String getPassword ()                 { return password;   }
+    public int getAccountNum  ()                 { return accountNum; }
+    public String getFirstName()                 { return firstName;  }
+    public String getLastName ()                 { return lastName;   }
+    public Role getRole       ()                 { return role;       }
+    public void setUserId     (int customerId)   { this.userId = customerId;     }
+    public void setUsername   (String username)  { this.username = username;     }
+    public void setPassword   (String password)  { this.password = password;     }
+    public void setAccountNum (int accountNum)   { this.accountNum = accountNum; }
+    public void setFirstName  (String firstName) { this.firstName = firstName;   }
+    public void setLastName   (String lastName)  { this.lastName = lastName;     }
+    public void setRole       (Role role)        { this.role = role;             }
 
     @Override
     public String toString() {

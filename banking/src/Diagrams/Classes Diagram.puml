@@ -1,0 +1,197 @@
+@startuml
+
+interface ListPagingAndSotringRepository {
+    findAll(): List
+}
+
+interface QueryByExampleExecutor {
+    findOne(): Optional
+    findAll(): Iterable
+    findAll(): Page
+    count(): long
+    exists(): boolean
+    findBy(): R
+}
+interface Repository {}
+
+interface CrudRepository {
+    save(): S
+    saveAll(): Iterable
+    findById(): Optional
+    existsById(): Boolean
+    findAll(): Iterable
+    findAllById(): Iterable
+    count(): long
+    deleteById(): void
+    delete(): void
+    deleteAllById(): void
+    deleteAll(): void
+    deleteAll(): void
+}
+
+interface ListCrudRepository {
+    saveAll(): S
+    findAll(): List
+    findAllById(): List
+}
+
+interface JpaRepository {
+    flush(): Void
+    saveAndFlush(): S
+    saveAllAndFlush(): S
+    deleteAllInBatch(): void
+    deleteAllByIdInBatch(): void
+    deleteAllInBatch(): void
+    getById(): T
+    getReferenceById(): T
+    findAll(): List
+}
+
+class Account {
+    -accountId: long
+    -date: Date
+    -balance: BigDecimal
+    -user: User
+    +getAccountId(): long
+    +setAccountId(): void
+    +getDate(): Date
+    +setDate(): void
+    +getBalance(): BigDecimal
+    +setBalance(): void
+    +getUser(): User
+    +setUser(): void
+    +toString(): String
+}
+
+class User {
+    -customerId: int
+    -username: String
+    -password: String
+    -accountNum: int
+    -firstName: String
+    -lastName: String
+    -role: Role
+    +User()
+    +User(String, String)
+    +User(String, String, Role)
+    +User(String, String, int, String, String)
+    +getCustomerId(): int
+    +getUsername(): String
+    +getPassword(): String
+    +getAccountNum(): int
+    +getFirstName(): String
+    +getLastName(): String
+    +getRole(): Role
+    +setCustomerId(int): void
+    +setUsername(String): void
+    +setPassword(String): void
+    +setAccountNum(int): void
+    +setFirstName(String): void
+    +setLastName(String): void
+    +setRole(Role): void
+    +toString(): String
+}
+
+class UserService {
+    -userDAO: UserDAO
+    +UserService(UserDAO)
+    +findAll(): List<User>
+    +save(User): User
+    +getReferenceById(int): User
+    +saveAndFlush(User): User
+}
+
+class UserController {
+    -uServ: UserService
+    +UserController()
+    +getAllUsers(): ResponseEntity
+    +addUser(): ResponseEntity
+    +getUserById(): ResponseEntity
+    +updateUser(): ResponseEntity
+    +deleteUser(): ResponseEntity
+}
+
+class AccountService {
+    // Add methods and attributes as needed
+}
+
+class TransactionService {
+    -transactionDAO: TransactionDAO
+    +TransactionService()
+    +findAll(): List
+    +createTransaction(): Transaction
+    +getTransactionById(): Transaction
+    +saveAndFlush(): Transaction
+}
+
+class TransactionController {
+    - TransactionService tserv
+    + TransactionController()
+    + getAllTransactions(): ResponseEntity
+    + newTransaction(): ResponseEntity
+    + getTransactionById: ResponseEntity
+}
+Interface TransactionDAO {
+    // Spring Data JPA interface, no need to include methods here
+}
+class Transaction {
+    // Transaction class attributes and methods
+}
+
+Interface UserDAO {
+    // Spring Data JPA interface, no need to include methods here
+}
+
+Interface AccountDAO {
+    // Spring Data JPA interface, no need to include methods here
+}
+
+Interface Role {
+    // Add Role class attributes and methods as needed
+}
+
+class Loan {
+    // Loan class attributes and methods
+}
+
+class LoanService {
+    // LoanService methods
+}
+
+class RoleService {
+    // RoleService methods
+}
+
+UserService "1" --> "0..1" UserDAO: uses
+UserController "1" --> "1" UserService: uses
+UserController "1" --> "0..1" User: has
+User "1" --> "0..1" Account: has
+User "1" --> "0..1" Role: has
+Loan "1" --> "0..1" User: has
+Loan "1" --> "0..1" Account: has
+TransactionService "1" --> "0..1" TransactionDAO: uses
+TransactionController "1" --> "1" TransactionService: uses
+TransactionController "1" --> "0..1" Transaction: has
+Transaction "1" --> "0..1" Account: has
+Transaction "1" --> "0..1" User: has
+AccountService "1" --> "0..1" AccountDAO: uses
+AccountController "1" --> "1" AccountService: uses
+AccountController "1" --> "0..1" Account: has
+LoanService "1" --> "0..1" LoanDAO: uses
+LoanController "1" --> "1" LoanService: uses
+LoanController "1" --> "0..1" Loan: has
+RoleService "1" --> "0..1" RoleDAO: uses
+RoleController "1" --> "1" RoleService: uses
+RoleController "1" --> "0..1" Role: has
+JpaRepository "1" <|-- "1" AccountDAO: extends >
+JpaRepository "1" <|-- "1" TransactionDAO: extends >
+JpaRepository "1" <|-- "1" UserDAO: extends >
+JpaRepository "1" <|-- "1" RoleDAO: extends >
+ListPagingAndSotringRepository "1" <|-- "1" JpaRepository: extends >
+ListCrudRepository "1" <|-- "1" JpaRepository: extends >
+CrudRepository "1" <|-- "1" ListCrudRepository: extends >
+Repository "1" <|-- "1" CrudRepository: extends >
+QueryByExampleExecutor "1" <|-- "1" JpaRepository: extends >
+
+@enduml
+

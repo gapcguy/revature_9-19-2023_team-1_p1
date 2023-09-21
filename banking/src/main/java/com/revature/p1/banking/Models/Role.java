@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 @Entity
-@Table(name="Roles")
+@Table(name="roles")
 @Component
 public class Role {
     @Id
@@ -13,6 +13,9 @@ public class Role {
 
     @Column(nullable = false, unique = true)
     private String roleName;
+
+    @Column(nullable = false)
+    private Double roleSalary;
 
     public int getRoleId() {
         return roleId;
@@ -30,11 +33,15 @@ public class Role {
         this.roleName = roleName;
     }
 
+    public double getRoleSalary(double roleSalary) { return roleSalary; }
+    public void setRoleSalary(double roleSalary) { this.roleSalary = roleSalary; }
+
     @Override
     public String toString() {
         return "Role{" +
                 "roleId=" + roleId +
                 ", roleName='" + roleName + '\'' +
+                ", roleSalary='" + roleSalary + '\'' +
                 '}';
     }
 }

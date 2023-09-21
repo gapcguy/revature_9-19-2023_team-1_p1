@@ -8,46 +8,78 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
 @CrossOrigin
 public class UserController {
 
-    private UserService uServ;
+    private final UserService uServ;
 
     @Autowired
     public UserController(UserService uServ) { this.uServ = uServ; }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok().body(uServ.findAll());
-    }
+    public ResponseEntity<List<User>> getAllUsers() { return ResponseEntity.ok().body(uServ.findAll()); }
 
     @PostMapping
     public ResponseEntity<User> addUser(@RequestBody User c) {
         User newUser = uServ.save(c);
-
-        if( newUser == null) { return ResponseEntity.badRequest().build(); }
-
-        return ResponseEntity.accepted().body(newUser);
+        return ( newUser == null) ? ResponseEntity.badRequest().build() : ResponseEntity.accepted().body(newUser);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
-        if (id <= 0) { return ResponseEntity.badRequest().build(); }
 
-        User u = uServ.getReferenceById(id);
+        User u = uServ.findById(id);
 
-        if( u == null ) { return ResponseEntity.noContent().build(); }
+        return (id <= 0) ? ResponseEntity.badRequest().build()  :
+               (u == null) ? ResponseEntity.noContent().build() :
+                       ResponseEntity.ok().body(u);
 
-        return ResponseEntity.ok().body(u);
     }
+    // todo: select method for userName
+    @GetMapping("/username/{username}")
+    public ResponseEntity<Object> findByUsername(@PathVariable("username") String username) {
+        try {
+            User u = uServ.findByUsername(username);
+            return ResponseEntity.ok().body(u);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
     @PutMapping
-    public ResponseEntity<User> updateUser(@RequestBody User c) {
-        User updatedUser = uServ.saveAndFlush(c);
+    public ResponseEntity<Object> updateUser(@RequestBody User u) {
+        try {
 
-        return ResponseEntity.accepted().body(updatedUser);
+            return ResponseEntity.accepted().body(uServ.updateEntireUser(u));
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Object> updateUserName(@PathVariable("id") int id, @RequestBody String username) {
+        try {
+            return ResponseEntity.accepted().body(uServ.updateEmployeeUsername(id, username));
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<User> deleteUserById(@PathVariable("id") int id) {
+        if (id <= 0 ) { return ResponseEntity.badRequest().build(); }
+
+        User deletedUser = uServ.deleteById(id);
+
+        return (deletedUser != null) ? ResponseEntity.ok().body(deletedUser) : ResponseEntity.notFound().build();
+
     }
 }

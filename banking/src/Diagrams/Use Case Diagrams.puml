@@ -1,0 +1,44 @@
+@startuml
+skinparam actorStyle awesome
+left to right direction
+actor Customer as c
+
+package "Bank Staff" {
+    actor Manager as m
+    actor Employee as e
+}
+
+package "Banking App" {
+    usecase "Create Account" as UC1
+    usecase "Review Transactions" as UC2
+    usecase "Log In" as (login)
+    usecase "Loan application" as (loan_apply)
+    usecase "Loan approval/denial" as (loan_approve_deny)
+    usecase "Funds transfer" as (account_transfer)
+    usecase "Create Statement" as (create_statement)
+    usecase "Make Transaction" as (transaction)
+    usecase "Update Customer Account" as (customer_acct_update)
+    usecase "Deposit loan" as (deposit_loan)
+    usecase "Delete Account" as (delete_account)
+}
+
+c --> (delete_account)
+e --> (delete_account)
+m --> (delete_account)
+m --> (deposit_loan)
+c --> (customer_acct_update)
+m --> (customer_acct_update)
+m --> (login)
+c --> UC2
+c --> (transaction)
+c --> (login)
+c --> (account_transfer)
+c --> (loan_apply)
+m --> UC1
+e --> UC1
+e --> (loan_approve_deny)
+m --> (loan_approve_deny)
+(loan_apply) <|-- (loan_approve_deny)
+m --> (create_statement)
+
+@enduml

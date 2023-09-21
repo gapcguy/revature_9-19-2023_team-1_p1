@@ -14,7 +14,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int customerId;
+    private int userId;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -31,7 +31,7 @@ public class User {
     @Column(nullable = false, unique = false)
     private String lastName;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "roleIdFk")
     private Role role;
 
@@ -58,14 +58,14 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getCustomerId() { return customerId; }
+    public int getUserId() { return userId; }
     public String getUsername() { return username; }
     public String getPassword() { return password; }
     public int getAccountNum() { return accountNum; }
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName; }
     public Role getRole() { return role; }
-    public void setCustomerId(int customerId) { this.customerId = customerId; }
+    public void setUserId(int customerId) { this.userId = customerId; }
     public void setUsername(String username) { this.username = username; }
     public void setPassword(String password) { this.password = password; }
     public void setAccountNum(int accountNum) { this.accountNum = accountNum; }
@@ -76,7 +76,7 @@ public class User {
     @Override
     public String toString() {
         return "Customer{" +
-                "customerId=" + customerId +
+                "customerId=" + userId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", accountNum=" + accountNum +

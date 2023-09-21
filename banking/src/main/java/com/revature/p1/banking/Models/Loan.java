@@ -14,13 +14,13 @@ public class Loan {
     private long loanId;
 
     @OneToOne
-    @JoinColumn(name = "accountIdFk", referencedColumnName = "accountId")
+    @JoinColumn(name = "accountId")
     private Account recipientAccount;
 
 
     @OneToOne
-    @JoinColumn(name = "approvalAccountIdFk", referencedColumnName = "userId")
-    private User approvedByAccount;
+    @JoinColumn(name =  "userId")
+    private User approvedBy;
 
 
     @Column(unique = false, nullable = false)
@@ -58,11 +58,11 @@ public class Loan {
     }
 
     public User getApprovedByAccount() {
-        return approvedByAccount;
+        return approvedBy;
     }
 
     public void setApprovedByUser(User approvedByAccount) {
-        this.approvedByAccount = approvedByAccount;
+        this.approvedBy = approvedByAccount;
     }
 
     public BigDecimal getLoanAmount() {
@@ -94,7 +94,7 @@ public class Loan {
         return "Loan{" +
                 "loanId=" + loanId +
                 ", recipientAccount=" + recipientAccount +
-                ", approvedByAccount=" + approvedByAccount +
+                ", approvedByAccount=" + approvedBy +
                 ", loanAmount=" + loanAmount +
                 ", loanDateTime=" + loanDateTime +
                 ", approved=" + approved +

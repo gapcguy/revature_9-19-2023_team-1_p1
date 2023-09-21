@@ -13,8 +13,15 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long transactionId;
 
-    @Column(unique = false, nullable = false)
-    private int accountNum;
+    @OneToOne
+    @JoinColumn(name = "fromAccount",referencedColumnName = "accountId")
+    private Account fromAccount;
+
+
+    // Foreign keys: TODO: EVALUATE FOR PROPER MULTIPLICITY
+    @OneToOne
+    @JoinColumn(name = "toAccount",referencedColumnName = "accountId")
+    private Account toAccount;
 
     @Column(unique = false, nullable = false)
     private BigDecimal transactionAmount;
@@ -22,81 +29,15 @@ public class Transaction {
     @Column(unique = false, nullable = false)
     private Timestamp transactionDateTime;
 
-    @OneToOne
-    @JoinColumn(name = "fromAccountIdFk")
-    private Account fromAccount;
 
-
-    // Foreign keys: TODO: EVALUATE FOR PROPER MULTIPLICITY
-    @OneToOne
-    @JoinColumn(name = "toAccountIdFk")
-    private Account toAccount;
 
     public Transaction() {}
 
-    public Transaction(int accountNum, BigDecimal transactionAmount, Timestamp transactionDateTime) {
-        this.accountNum = accountNum;
-        this.transactionAmount = transactionAmount;
-        this.transactionDateTime = transactionDateTime;
-    }
-
-    public long getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(long transactionId) {
+    public Transaction(long transactionId, Account fromAccount, Account toAccount, BigDecimal transactionAmount, Timestamp transactionDateTime) {
         this.transactionId = transactionId;
-    }
-
-    public int getAccountNum() {
-        return accountNum;
-    }
-
-    public void setAccountNum(int accountNum) {
-        this.accountNum = accountNum;
-    }
-
-    public BigDecimal getTransactionAmount() {
-        return transactionAmount;
-    }
-
-    public void setTransactionAmount(BigDecimal transactionAmount) {
-        this.transactionAmount = transactionAmount;
-    }
-
-    public Timestamp getTransactionDateTime() {
-        return transactionDateTime;
-    }
-
-    public void setTransactionDateTime(Timestamp transactionDateTime) {
-        this.transactionDateTime = transactionDateTime;
-    }
-
-    public Account getFromAccount() {
-        return fromAccount;
-    }
-
-    public void setFromAccount(Account fromAccount) {
         this.fromAccount = fromAccount;
-    }
-
-    public Account getToAccount() {
-        return toAccount;
-    }
-
-    public void setToAccount(Account toAccount) {
         this.toAccount = toAccount;
-    }
-
-    @Override
-    public String toString() {
-        return "Transaction{" +
-                "transactionId=" + transactionId +
-                ", accountNum=" + accountNum +
-                ", transactionAmount=" + transactionAmount +
-                ", transactionDateTime=" + transactionDateTime +
-                ", fromAccount=" + fromAccount +
-                ", toAccount=" + toAccount +
-                '}';
+        this.transactionAmount = transactionAmount;
+        this.transactionDateTime = transactionDateTime;
     }
 }

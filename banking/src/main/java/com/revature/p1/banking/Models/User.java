@@ -18,8 +18,6 @@ public class User {
     @Column(nullable = false,unique = false)
     private String password;
 
-    @Column(nullable = false, unique = true)
-    private int accountNum;
 
     @Column(nullable = false, unique = false)
     private String firstName;
@@ -28,7 +26,7 @@ public class User {
     private String lastName;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "roleIdFk")
+    @JoinColumn(name = "roleId")
     private Role role;
 
 
@@ -45,10 +43,9 @@ public class User {
         this.role     = role;
     }
 
-    public User(String username, String password, int accountNum, String firstName, String lastName) {
+    public User(String username, String password, Account accountNum, String firstName, String lastName) {
         this.username   = username;
         this.password   = password;
-        this.accountNum = accountNum;
         this.firstName  = firstName;
         this.lastName   = lastName;
     }
@@ -56,14 +53,13 @@ public class User {
     public int getUserId      ()                 { return userId;     }
     public String getUsername ()                 { return username;   }
     public String getPassword ()                 { return password;   }
-    public int getAccountNum  ()                 { return accountNum; }
     public String getFirstName()                 { return firstName;  }
     public String getLastName ()                 { return lastName;   }
     public Role getRole       ()                 { return role;       }
     public void setUserId     (int customerId)   { this.userId = customerId;     }
     public void setUsername   (String username)  { this.username = username;     }
     public void setPassword   (String password)  { this.password = password;     }
-    public void setAccountNum (int accountNum)   { this.accountNum = accountNum; }
+
     public void setFirstName  (String firstName) { this.firstName = firstName;   }
     public void setLastName   (String lastName)  { this.lastName = lastName;     }
     public void setRole       (Role role)        { this.role = role;             }
@@ -74,7 +70,6 @@ public class User {
                 "customerId=" + userId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", accountNum=" + accountNum +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';

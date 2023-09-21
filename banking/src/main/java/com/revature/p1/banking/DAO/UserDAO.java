@@ -21,7 +21,7 @@ public interface UserDAO extends JpaRepository<User, Integer> {
         We want to be able to find an employee by username. Unfortunately, Spring Data only knows the primary key;
         therefore, we need to define our own. Spring Data *is* smart enough to implement this method for us -- we
         merely define the abstraction.  */
-    public Optional<User> findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
     /* How this works:
         By having a method name starting with "findBy", and ending in the variable you want to find. Spring needs

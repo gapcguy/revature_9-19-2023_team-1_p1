@@ -16,6 +16,23 @@ public class BankControllerTests {
 
     }
 
+    //Test Roles
+
+    @Test
+    void testCreateRole(){
+
+    }
+
+    @Test
+    void testUpdateRole(){
+
+    }
+
+    @Test
+    void testGetRole(){
+
+    }
+
 
     //User controller tests
     @Test
@@ -75,5 +92,24 @@ public class BankControllerTests {
 
     }
 
-    //Testing Miscellaneous
+    //Loans
+    @Test
+    void testCreateLoan(){
+
+    }
+
+    @Test
+    void testUpdateLoan(){
+
+    }
+
+    @Test
+    void testPayLoan(){
+
+    }
+
+    @Test
+    void testGetLoan(){
+
+    }
 }

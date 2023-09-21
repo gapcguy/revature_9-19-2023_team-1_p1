@@ -17,30 +17,18 @@ public class Role {
     @Column(nullable = false)
     private Double roleSalary;
 
-    public int getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public double getRoleSalary(double roleSalary) { return roleSalary; }
-    public void setRoleSalary(double roleSalary) { this.roleSalary = roleSalary; }
+    public int    getRoleId    ()                  { return roleId;                }
+    public String getRoleName  ()                  { return roleName;              }
+    public double getRoleSalary(double roleSalary) { return roleSalary;            }
+    public void   setRoleId    (int roleId)        { this.roleId = roleId;         }
+    public void   setRoleName  (String roleName)   { this.roleName = roleName;     }
+    public void   setRoleSalary(double roleSalary) { this.roleSalary = roleSalary; }
 
     @Override
     public String toString() {
-        return "Role{" +
-                "roleId=" + roleId +
-                ", roleName='" + roleName + '\'' +
+        return "Role{ "          +
+                "roleId="        + roleId     +
+                ", roleName='"   + roleName   + '\'' +
                 ", roleSalary='" + roleSalary + '\'' +
                 '}';
     }

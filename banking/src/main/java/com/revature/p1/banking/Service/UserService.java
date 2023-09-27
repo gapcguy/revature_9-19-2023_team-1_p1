@@ -5,11 +5,8 @@ import com.revature.p1.banking.DAO.UserDAO;
 import com.revature.p1.banking.Models.Role;
 import com.revature.p1.banking.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -106,13 +103,5 @@ public class UserService {
             return user;
     }
 
-    public User insertUser(User u, int roleId) {
-        Optional<Role> role = roleDAO.findById(roleId);
-
-        if(role.isPresent()) {
-            u.setRole(role.get());
-            return userDAO.save(u);
-        } else { throw new IllegalArgumentException("Role could not be found. Aborting insertion."); }
-    }
-
+    public User insertUser(User u) { return userDAO.save(u); }
 }

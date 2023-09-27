@@ -25,6 +25,7 @@ public class AuthController {
     //(since we need to use its methods)
     private UserService uServ;
     private UserDAO uDAO;
+    public static HttpSession ses;
 
     /**
      * @param uServ
@@ -48,6 +49,7 @@ public class AuthController {
             session.setAttribute("username", loginUser.getUsername());
             session.setAttribute("password", loginUser.getPassword());
             session.setAttribute("role", loginUser.getRole());
+            ses = session;
 
             return ResponseEntity.ok(loginUser);
         } catch (Exception e) {

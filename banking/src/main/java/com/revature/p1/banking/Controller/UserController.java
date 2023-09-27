@@ -3,6 +3,7 @@ package com.revature.p1.banking.Controller;
 import com.revature.p1.banking.Models.User;
 import com.revature.p1.banking.Service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,14 +17,14 @@ public class UserController {
 
     private final UserService userService;
 
-    @PreAuthorize(value = "hasRole('manager')")
+    @PreAuthorize(value = "hasRole('ROLE_ADMIN')")
     @GetMapping("")
     public List<User> getUsers() {
         return userService.findAll();
     }
 
     @PostMapping("/register")
-    public User addUser(@RequestBody User u) {
-        return userService.insertUser(u);
+    public ResponseEntity<User> addUser(@RequestBody User u) {
+        // Create an implementation for adding a user
     }
 }

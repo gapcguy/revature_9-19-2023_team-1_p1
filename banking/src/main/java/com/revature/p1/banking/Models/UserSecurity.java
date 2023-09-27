@@ -3,12 +3,11 @@ package com.revature.p1.banking.Models;
 import com.revature.p1.banking.Models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-public class UserSecurity implements UserDetails {
+public class UserSecurity {
     private final User user;
 
     public UserSecurity(User user) { this.user = user; }

@@ -1,9 +1,7 @@
 package com.revature.p1.banking;
 
-import com.revature.p1.banking.DAO.AccountDAO;
 import com.revature.p1.banking.Service.*;
-import com.revature.p1.banking.util.ConnectionUtil;
-import org.aspectj.lang.annotation.Before;
+import com.revature.p1.banking.Utils.ConnectionUtil;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

@@ -29,4 +29,5 @@ public interface UserDAO extends JpaRepository<User, Integer> {
 
      /* There are a lot of options for custom DAO methods. Look into things like native queries if you really need
         specific DAO methods.  */
+
 }

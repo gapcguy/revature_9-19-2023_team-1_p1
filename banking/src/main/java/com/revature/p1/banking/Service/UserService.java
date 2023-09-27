@@ -33,6 +33,27 @@ public class UserService {
         else              { throw new IllegalArgumentException(); }
     }
 
+    public User login(User user) throws Exception {
+        String username = user.getUsername();
+        String password = user.getPassword();
+        if (username.equals(null) || username.equals("")) {
+            throw new IllegalArgumentException("Cannot find a user without a username");
+        }
+
+        Optional<User> u = userDAO.findByUsername(username);
+
+        // If the returned user is present in the optional,
+        if(u.isPresent()) {
+            User retrieved = u.get();
+            if(retrieved.getPassword().equals(password)){
+                return retrieved;
+            }else{
+                throw new Exception("incorrect password");
+            }
+        }
+        else              { throw new IllegalArgumentException(); }
+    }
+
     public User updateEntireUser(User u) {
         if(u.getUsername().equals(null) || u.getUsername().equals("")) {
             throw new IllegalArgumentException("Username must not update to null!");

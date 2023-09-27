@@ -1,15 +1,11 @@
 package com.revature.p1.banking.Service;
 
-import com.revature.p1.banking.DAO.RoleDAO;
 import com.revature.p1.banking.DAO.UserDAO;
-import com.revature.p1.banking.Models.Role;
+import com.revature.p1.banking.Models.Account;
 import com.revature.p1.banking.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +13,6 @@ import java.util.Optional;
 public class UserService {
 
     private UserDAO userDAO;
-    private RoleDAO roleDAO;
 
     public UserService() {}
     @Autowired
@@ -25,15 +20,7 @@ public class UserService {
 
     public List<User> findAll(){ return userDAO.findAll();  }
     public User save(User u){ return userDAO.save(u); }
-    public User findById(int id) {
-        if (id <= 0) {
-            throw new IllegalArgumentException("Employees with an ID of 0 or less cannot exist");
-        }
-        Optional<User> user = userDAO.findById(id);
-
-        if (user.isPresent()) { return user.get(); }
-        else { throw new IllegalArgumentException("Employee id " + id + "does not exist"); }
-    }
+    public User findById(int id){ return userDAO.getReferenceById(id); }
     public User findByUsername(String username) {
         if (username.equals(null) || username.equals("")) {
             throw new IllegalArgumentException("Cannot find a user without a username");
@@ -105,14 +92,4 @@ public class UserService {
             // we then respond with the newly-deleted user.
             return user;
     }
-
-    public User insertUser(User u, int roleId) {
-        Optional<Role> role = roleDAO.findById(roleId);
-
-        if(role.isPresent()) {
-            u.setRole(role.get());
-            return userDAO.save(u);
-        } else { throw new IllegalArgumentException("Role could not be found. Aborting insertion."); }
-    }
-
 }

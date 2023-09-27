@@ -1,12 +1,5 @@
 package com.revature.p1.banking.Models;
 
-public enum Role {
-    Viewer,
-    Customer,
-    Employee,
-    Manager
-};
-/*
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
@@ -40,5 +33,5 @@ public class Role {
                 '}';
     }
 }
-*/
+
 

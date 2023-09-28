@@ -5,10 +5,20 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import org.springframework.boot.SpringApplication;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
 public class BankControllerTests {
+    static HttpClient httpClient;
     @BeforeAll
     static void setup(){
-
+        SpringApplication.run(BankingApplication.class);
+        httpClient = HttpClient.newHttpClient();
     }
 
     @AfterAll
@@ -17,7 +27,7 @@ public class BankControllerTests {
     }
 
     //Test Roles
-
+    /*
     @Test
     void testCreateRole(){
 
@@ -32,12 +42,23 @@ public class BankControllerTests {
     void testGetRole(){
 
     }
-
+    */
 
     //User controller tests
     @Test
-    void testLogin(){
+    void testLogin() throws IOException, InterruptedException {
+        HttpRequest postRequest = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/p1/auth/login"))
+                .POST(HttpRequest.BodyPublishers.ofString("{" +
+                        "\"username\": \"test\", " +
+                        "\"password\": \"test\" }"))
+                .header("Content-Type", "application/json")
+                .build();
 
+        HttpResponse response = httpClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
+        int status = response.statusCode();
+
+        assert(302 == status);
     }
 
     @Test

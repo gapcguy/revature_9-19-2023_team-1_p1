@@ -26,6 +26,8 @@ public class User {
     private String lastName;
 
 
+    @Column(nullable = true)
+
     private int role;
 
 

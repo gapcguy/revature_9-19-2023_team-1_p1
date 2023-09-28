@@ -38,6 +38,6 @@ public class LoanController {
     //This loan patch will accept a loan. After accepting the loan, will need to transfer the money from the loan to the Account for the account_id_fk. Doing this will require a new transaction.
     //Essentially this request requires logic across multiple tables.
     //REQUIRE SESSIONS DATA FOR A USER WITH A ROLE THAT HAS ELEVATED PERMISSIONS
-    
+
 
 }

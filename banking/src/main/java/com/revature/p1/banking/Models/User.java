@@ -27,13 +27,13 @@ public class User {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "roleId", nullable = true)
-    private Role role;
+    private int role;
 
 
     public User() {
     }
 
-    public User(int userId, String username, String password, String firstName, String lastName, Role role) {
+    public User(int userId, String username, String password, String firstName, String lastName, int role) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -82,11 +82,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Role getRole() {
+    public int getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(int role) {
         this.role = role;
     }
 }

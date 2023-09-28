@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="Account")
@@ -24,6 +25,13 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
+
+    // Implementation for joint accounts.
+    @ManyToMany
+    @JoinTable(
+            name = "accountUsers", joinColumns = @JoinColumn(name="accountId"),
+            inverseJoinColumns = @JoinColumn(name="userId") )
+    private List<User> users;
 
     public long getAccountId() {
         return accountId;
@@ -57,6 +65,12 @@ public class Account {
         this.user = user;
     }
 
+    public List<User> getUsers() { return users; }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
     @Override
     public String toString() {
         return "Account{" +
@@ -66,4 +80,6 @@ public class Account {
                 ", user=" + user +
                 '}';
     }
+
+
 }

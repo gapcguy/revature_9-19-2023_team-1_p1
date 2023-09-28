@@ -1,6 +1,5 @@
 package com.revature.p1.banking.Controller;
 
-import com.revature.p1.banking.DAO.UserDAO;
 import com.revature.p1.banking.Models.User;
 import com.revature.p1.banking.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
@@ -30,13 +28,17 @@ public class UserController {
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
+    public ResponseEntity<Object> getUserById(@PathVariable("id") int id) {
 
         User u = uServ.findById(id);
 
-        return (id <= 0) ? ResponseEntity.badRequest().build()  :
-               (u == null) ? ResponseEntity.noContent().build() :
-                       ResponseEntity.ok().body(u);
+        try {
+            return (id <= 0) ? ResponseEntity.badRequest().build() :
+                    (u == null) ? ResponseEntity.noContent().build() :
+                            ResponseEntity.ok().body(u);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 
     }
     // todo: select method for userName

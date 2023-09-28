@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 @Entity
-@Table(name="roles")
+@Table(name="role")
 @Component
 public class Role {
     @Id

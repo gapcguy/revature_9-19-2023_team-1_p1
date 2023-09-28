@@ -2,14 +2,13 @@ package com.revature.p1.banking.Service;
 
 import com.revature.p1.banking.Controller.AuthController;
 import com.revature.p1.banking.DAO.AccountDAO;
-import com.revature.p1.banking.DAO.UserDAO;
 import com.revature.p1.banking.DTO.AccountDTO;
 import com.revature.p1.banking.Models.Account;
 import com.revature.p1.banking.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Example;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +24,17 @@ public class AccountService {
         this.aDAO = aDAO;
     }
 
-    public List<Account> findAll() { return aDAO.findAll(); }
+    public List<Account> findAll() {
+        Account acc = new Account();
+        User currUser = (User) AuthController.ses.getAttribute("currUser");
+        if(currUser.getRole()==(User.USER)){
+            acc.setUser(currUser);
+            Example<Account> query = Example.of(acc);
+            return aDAO.findAll(query);
+        }else{
+            return aDAO.findAll();
+        }
+        }
 
     public Account findByAcctNum(Integer acctNum) { // Use of Integer rather than int due to null check.
         if (acctNum == null) {
@@ -50,4 +59,5 @@ public class AccountService {
         account.setUser((User) AuthController.ses.getAttribute("currUser"));
         return aDAO.save(account);
     }
+
 }

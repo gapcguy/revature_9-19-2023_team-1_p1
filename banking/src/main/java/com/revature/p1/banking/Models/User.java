@@ -28,13 +28,15 @@ public class User {
 
     @Column(nullable = true)
 
-    private int role;
+    private char role;
+    public static char MANAGER = 'M';
+    public static char USER = 'U';
 
 
     public User() {
     }
 
-    public User(int userId, String username, String password, String firstName, String lastName, int role) {
+    public User(int userId, String username, String password, String firstName, String lastName, char role) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -87,7 +89,7 @@ public class User {
         return role;
     }
 
-    public void setRole(int role) {
+    public void setRole(char role) {
         this.role = role;
     }
 }

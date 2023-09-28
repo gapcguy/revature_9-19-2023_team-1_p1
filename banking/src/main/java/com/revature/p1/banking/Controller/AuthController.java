@@ -45,10 +45,7 @@ public class AuthController {
 
             User loginUser = uServ.login(requestBodyUser);
             HttpSession session = request.getSession();
-            session.setAttribute("id", loginUser.getUserId());
-            session.setAttribute("username", loginUser.getUsername());
-            session.setAttribute("password", loginUser.getPassword());
-            session.setAttribute("role", loginUser.getRole());
+            session.setAttribute("currUser",loginUser);
             ses = session;
 
             return ResponseEntity.ok(loginUser);

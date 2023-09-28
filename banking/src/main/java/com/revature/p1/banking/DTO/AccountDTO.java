@@ -8,7 +8,7 @@ public class AccountDTO {
     private Integer accountNum;
     private Date date;
     private BigDecimal balance;
-    private List<Integer> userIds;
+    private int userId;
 
     public Integer getAccountNum() {
         return accountNum;
@@ -24,9 +24,9 @@ public class AccountDTO {
         this.accountNum = accountNum;
     }
 
-    public AccountDTO(Integer accountNum, List<Integer> userIds) {
+    public AccountDTO(Integer accountNum, int userId) {
         this.accountNum = accountNum;
-        this.userIds = userIds;
+        this.userId = userId;
     }
 
     public AccountDTO(Integer accountNum, BigDecimal balance) {
@@ -34,17 +34,17 @@ public class AccountDTO {
         this.balance = balance;
     }
 
-    public AccountDTO(Integer accountNum, BigDecimal balance, List<Integer> userIds) {
+    public AccountDTO(Integer accountNum, BigDecimal balance, int userId) {
         this.accountNum = accountNum;
         this.balance = balance;
-        this.userIds = userIds;
+        this.userId = userId;
     }
 
-    public AccountDTO(Integer accountNum, Date date, BigDecimal balance, List<Integer> userIds) {
+    public AccountDTO(Integer accountNum, Date date, BigDecimal balance, int userId) {
         this.accountNum = accountNum;
         this.date = date;
         this.balance = balance;
-        this.userIds = userIds;
+        this.userId = userId;
     }
 
     public void setAccountNum(Integer accountNum) {
@@ -67,12 +67,11 @@ public class AccountDTO {
         this.balance = balance;
     }
 
-    public List<Integer> getUserIds() {
-        return userIds;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUserIds(List<Integer> userIds) {
-        this.userIds = userIds;
+    public void setUserId(int userId) {this.userId = userId;
     }
 
 

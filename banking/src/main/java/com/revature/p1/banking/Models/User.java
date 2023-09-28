@@ -25,8 +25,7 @@ public class User {
     @Column(nullable = false, unique = false)
     private String lastName;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "roleId", nullable = true)
+
     private int role;
 
 

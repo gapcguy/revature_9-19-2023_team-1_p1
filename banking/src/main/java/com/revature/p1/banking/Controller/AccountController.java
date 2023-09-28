@@ -34,7 +34,7 @@ public class AccountController {
      */
 
     @GetMapping
-    public ResponseEntity<List<Account>> getAllAccounts() { return ResponseEntity.ok().body(aServ.findAll()); }
+    public ResponseEntity<List<Account>> viewAccounts() { return ResponseEntity.ok().body(aServ.findAll()); }
 
     @GetMapping("/{acctNum}")
     public ResponseEntity<Object> getAccountByAcctNum(@PathVariable("acctNum") Integer acctNum) {

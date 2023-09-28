@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface AccountDAO extends JpaRepository<Account, Integer>{
 
-    Optional<Account> findByAccountNum(int accountNum);
+    Optional<Account> findByAccountId(int accountId);
 
 
 }

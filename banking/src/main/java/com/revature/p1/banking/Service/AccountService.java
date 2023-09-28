@@ -31,7 +31,7 @@ public class AccountService {
             throw new IllegalArgumentException("Cannot find an account without an account number");
         }
 
-        Optional<Account> a = aDAO.findByAccountNum(acctNum);
+        Optional<Account> a = aDAO.findByAccountId(acctNum);
 
         if (a.isPresent()) {
             return a.get();

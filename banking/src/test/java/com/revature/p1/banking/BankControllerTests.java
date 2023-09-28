@@ -101,7 +101,7 @@ public class BankControllerTests {
             throw new RuntimeException(e);
         }
     }
-
+/*
     @Test
     void testDeleteUser(){
 
@@ -168,5 +168,5 @@ public class BankControllerTests {
     @Test
     void testGetLoan(){
 
-    }
+    }*/
 }

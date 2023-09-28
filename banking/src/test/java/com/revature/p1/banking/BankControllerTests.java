@@ -25,8 +25,7 @@ public class BankControllerTests {
                         "\"username\": \"test\", " +
                         "\"password\": \"test\", " +
                         "\"firstName\": \"test\"," +
-                        "\"lastName\": \"test\"," +
-                        "\"role\": 1}"))
+                        "\"lastName\": \"test\"}"))
                 .header("Content-Type", "application/json")
                 .build();
         try {
@@ -88,7 +87,7 @@ public class BankControllerTests {
                         "\"password\": \"test2\", " +
                         "\"firstName\": \"Jame\"," +
                         "\"lastName\": \"vidyoe\"," +
-                        "\"role\": 2}"))
+                        "\"role\": \"M\"}"))
                 .header("Content-Type", "application/json")
                 .build();
         try {
@@ -117,11 +116,24 @@ public class BankControllerTests {
     void testDeleteAccount(){
 
     }
-
+*/
     @Test
     void testGetAccounts(){
+        HttpRequest getRequest = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/p1/accounts"))
+                .build();
+        try {
+            HttpResponse response = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.statusCode());
+            System.out.println(response.body());
 
-    }
+            assert(200 == response.statusCode());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }/*
 
     @Test
     void testGetSpecificAccount(){

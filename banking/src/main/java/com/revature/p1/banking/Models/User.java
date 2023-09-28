@@ -27,11 +27,9 @@ public class User {
 
 
     @Column(nullable = true)
-
-    private char role;
+    private char role = 'U';
     public static char MANAGER = 'M';
     public static char USER = 'U';
-
 
     public User() {
     }
@@ -85,7 +83,7 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getRole() {
+    public char getRole() {
         return role;
     }
 

@@ -27,4 +27,17 @@ public class LoanController {
     public ResponseEntity<List<Loan>> getAllLoans() {
         return ResponseEntity.ok().body(loanService.findAll());
     }
+
+
+    //TODO Post method to create a loan request
+    //This loan request will create a new loan with the boolean Accepted equal to false
+    //REQUIRES SESSION DATA FOR A USER
+    //REQUIRES A PATHPARAM FOR THE ACCOUNT OF THE LOAN, and the BODY will contain the AMOUNT requested
+
+    //TODO Post method to accept a loan.
+    //This loan patch will accept a loan. After accepting the loan, will need to transfer the money from the loan to the Account for the account_id_fk. Doing this will require a new transaction.
+    //Essentially this request requires logic across multiple tables.
+    //REQUIRE SESSIONS DATA FOR A USER WITH A ROLE THAT HAS ELEVATED PERMISSIONS
+    
+
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="Account")
+@Table(name="account")
 @Component
 public class Account {
 

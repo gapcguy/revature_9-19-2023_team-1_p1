@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="loans")
+@Table(name="loan")
 @Component
 public class Loan {
     @Id

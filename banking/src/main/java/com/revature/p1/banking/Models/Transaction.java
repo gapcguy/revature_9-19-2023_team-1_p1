@@ -17,6 +17,9 @@ public class Transaction {
     @JoinColumn(name = "fromAccount",referencedColumnName = "accountId")
     private Account fromAccount;
 
+    @OneToOne
+    @JoinColumn(name="loanId", referencedColumnName="loanId")
+    private Loan loan;
 
     // Foreign keys: TODO: EVALUATE FOR PROPER MULTIPLICITY
     @OneToOne
@@ -29,7 +32,25 @@ public class Transaction {
     @Column(unique = false, nullable = false)
     private Timestamp transactionDateTime;
 
+    public void setLoanId(long loanId) {
+        Loan loan = new Loan();
+        loan.setLoanId(loanId);
+        this.loan = loan;
+    }
 
+    public void setRecipientAccountId(int recipientAccountId) {
+        Account toAccount = new Account();
+        toAccount.setAccountId(recipientAccountId);
+        this.toAccount = toAccount;
+    }
+
+    public void setTransactionAmount(BigDecimal transactionAmount) {
+        this.transactionAmount = transactionAmount;
+    }
+
+    public void setTransactionDateTime(Timestamp transactionDateTime) {
+        this.transactionDateTime = transactionDateTime;
+    }
 
     public Transaction() {}
 

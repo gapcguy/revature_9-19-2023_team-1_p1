@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 @Table(name="loan")
 @Component
 public class Loan {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long loanId;
@@ -53,7 +54,7 @@ public class Loan {
         return recipientAccount;
     }
 
-    public void setRecipientUser(Account recipientAccount) {
+    public void setRecipientAccount(Account recipientAccount) {
         this.recipientAccount = recipientAccount;
     }
 

@@ -28,8 +28,9 @@ public class User {
 
     @Column(nullable = true)
     private char role = 'U';
-    public static char MANAGER = 'M';
-    public static char USER = 'U';
+    public static final char MANAGER = 'M';
+    public static final char EMPLOYEE = 'E';
+    public static final char USER = 'U';
 
     public User() {
     }

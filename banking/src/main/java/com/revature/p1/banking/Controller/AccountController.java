@@ -76,5 +76,15 @@ public class AccountController {
         }
     }
 
+    @PostMapping("/{acctNum}/deposit")
+    public ResponseEntity<Object> deposit(@RequestParam("amount") BigDecimal amount, @PathVariable("acctNum") Integer acctNum){
+        try {
+            return ResponseEntity.ok(aServ.deposit(amount,acctNum,tServ));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
 }

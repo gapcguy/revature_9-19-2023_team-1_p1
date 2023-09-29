@@ -69,6 +69,12 @@ public class AccountService {
         if(bal.compareTo(ammount) < 0){
             throw new Exception("insufficient funds");
         }
+        return deposit(ammount.negate(),id,transactionService);
+    }
+
+    public Account deposit(BigDecimal ammount, int id,TransactionService transactionService) throws Exception {
+        Account acc = findByAcctNum(id);
+        BigDecimal bal = (BigDecimal) acc.getBalance();
         acc.setBalance(bal.add(ammount));
         Transaction t = new Transaction();
         t.setRecipientAccountId(acc.getAccountId());

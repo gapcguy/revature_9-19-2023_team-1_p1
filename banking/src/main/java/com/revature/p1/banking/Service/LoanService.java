@@ -107,7 +107,7 @@ public class LoanService {
         }
     }
 
-    public boolean acceptHelper(User user, int loanId) {
+    private boolean acceptHelper(User user, int loanId) {
         Optional<Loan> loanOptional = lDAO.findById(loanId);
 
         if (loanOptional.isPresent()) {
@@ -155,4 +155,4 @@ public class LoanService {
         } else { throw new Exception("Failed to accept loan"); }
     }
     }
-}
+

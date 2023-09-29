@@ -12,7 +12,7 @@ public class Loan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long loanId;
+    private int loanId;
 
     @OneToOne
     @JoinColumn(name = "accountId")
@@ -42,11 +42,11 @@ public class Loan {
         this.loanDateTime = loanDateTime;
     }
 
-    public long getLoanId() {
+    public int getLoanId() {
         return loanId;
     }
 
-    public void setLoanId(long loanId) {
+    public void setLoanId(int loanId) {
         this.loanId = loanId;
     }
 

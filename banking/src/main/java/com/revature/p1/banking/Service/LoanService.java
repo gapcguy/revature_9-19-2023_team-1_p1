@@ -1,9 +1,15 @@
 package com.revature.p1.banking.Service;
 
+import com.revature.p1.banking.Controller.AuthController;
 import com.revature.p1.banking.DAO.LoanDAO;
+import com.revature.p1.banking.DTO.LoanDTO;
+import com.revature.p1.banking.Models.Account;
 import com.revature.p1.banking.Models.Loan;
+import com.revature.p1.banking.Models.Transaction;
 import com.revature.p1.banking.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -14,13 +20,13 @@ import java.util.Optional;
 @Service
 public class LoanService {
     private LoanDAO lDAO;
-    private AccountService accountService;
     @Autowired
-    public LoanService(LoanDAO loanDAO)  { this.lDAO = loanDAO; }
+    public LoanService(LoanDAO loanDAO,AccountService aServ)  {
+        this.lDAO = loanDAO; }
 
     public List<Loan> findAll(){ return lDAO.findAll();  }
     public Loan save(Loan l){ return lDAO.save(l); }
-    public Loan findById(Long id){ return lDAO.getReferenceById(id); }
+    public Loan findById(int id){ return lDAO.getReferenceById(id); }
 
     /*
     public List<Loan> findByApproved(Boolean approved) {
@@ -40,7 +46,7 @@ public class LoanService {
         else { throw new IllegalArgumentException("Loan not found."); }
     }
 
-    public Loan deleteById(long id) {
+    public Loan deleteById(int id) {
         Optional<Loan> loanOptional = lDAO.findById(id);
         if (!loanOptional.isPresent()) { return null; }
         Loan loan = loanOptional.get();
@@ -48,7 +54,60 @@ public class LoanService {
         return loan;
     }
 
-    public boolean acceptLoan(User user, long loanId) {
+
+
+    public Loan createLoanRequest(User currentUser, Account account, BigDecimal loanAmount) {
+
+
+
+        // Create the newLoan object.
+        Loan newLoan = new Loan();
+        // Set the newLoan parameters.
+        newLoan.setRecipientAccount(account);
+        newLoan.setLoanAmount(loanAmount);
+        newLoan.setLoanDateTime(new Timestamp(System.currentTimeMillis()));
+        newLoan.setApproved(false);
+
+        try {
+            // Save the new loan request to the database.
+            newLoan = lDAO.save(newLoan);
+
+            // Return the newLoan object
+            return newLoan;
+        } catch (Exception e) {
+            // Handle any exceptions.
+            e.printStackTrace();
+            // Finally, return null to indicate a failure.
+            return null;
+        }
+    }
+
+
+    public Loan apply(LoanDTO lDTO, Account account) throws Exception {
+        User currentUser = AuthController.getUser();
+        // If there is no user session set, deny access.
+        if (currentUser == null) {
+            throw new Exception("Must be logged in");
+        }
+
+        // Second check - See Use case diagram.
+        // It is expected that the user is the only role that can request a loan.
+        if (currentUser.getRole() != 'U') {
+            throw new Exception("Only users can apply for loan");
+        }
+        Integer accountId = Math.toIntExact(lDTO.getAccountId());
+        BigDecimal loanAmount = lDTO.getLoanAmount();
+
+        Loan newLoan = createLoanRequest(currentUser, account, loanAmount);
+
+        if (newLoan != null) {
+            return newLoan;
+        } else {
+            throw new Exception(" Unknown Error Ocurred While Applying");
+        }
+    }
+
+    public boolean acceptHelper(User user, int loanId) {
         Optional<Loan> loanOptional = lDAO.findById(loanId);
 
         if (loanOptional.isPresent()) {
@@ -73,26 +132,27 @@ public class LoanService {
 
     }
 
-    public Loan createLoanRequest(User currentUser, Integer accountId, BigDecimal loanAmount) {
-        // Create the newLoan object.
-        Loan newLoan = new Loan();
-        // Set the newLoan parameters.
-        newLoan.setRecipientAccount(accountService.findByAcctNum(accountId));
-        newLoan.setLoanAmount(loanAmount);
-        newLoan.setLoanDateTime(new Timestamp(System.currentTimeMillis()));
-        newLoan.setApproved(false);
-
-        try {
-            // Save the new loan request to the database.
-            newLoan = lDAO.save(newLoan);
-
-            // Return the newLoan object
-            return newLoan;
-        } catch (Exception e) {
-            // Handle any exceptions.
-            e.printStackTrace();
-            // Finally, return null to indicate a failure.
-            return null;
+    public Transaction acceptLoan(int loanId, TransactionService transactionService) throws Exception {
+        User currentUser = AuthController.getUser();
+        if (currentUser == null) {
+            throw new Exception("You must be logged in to do that.");
         }
+
+        // See Use case diagram for role permissions. The User *must* be a manager or employee to proceed
+        if (currentUser.getRole() != User.MANAGER || currentUser.getRole() != User.EMPLOYEE) {
+            throw new Exception("You must be a Manager to perform this action");
+        }
+
+        if (acceptHelper(currentUser, loanId)) {
+            Transaction transaction = transactionService.createTransaction(
+                    loanId,
+                    findById(loanId).getRecipientAccount().getAccountId(),
+                    findById(loanId).getLoanAmount()
+            );
+
+            if (transaction != null) { return transaction; }
+            else { throw new Exception("Failed to create transaction"); }
+        } else { throw new Exception("Failed to accept loan"); }
+    }
     }
 }

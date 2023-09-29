@@ -54,4 +54,8 @@ public class AuthController {
         }
     }
 
+    public static User getUser(){
+        return (User) ses.getAttribute("currUser");
+    }
+
 }

@@ -14,7 +14,7 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long accountId;
+    private int accountId;
 
     @Column(nullable=false, unique = true)
     private Date date;
@@ -28,7 +28,7 @@ public class Account {
 
 
 
-    public long getAccountId() {
+    public int getAccountId() {
         return accountId;
     }
 

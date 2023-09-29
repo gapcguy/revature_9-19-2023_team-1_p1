@@ -32,7 +32,7 @@ public class Transaction {
     @Column(unique = false, nullable = false)
     private Timestamp transactionDateTime;
 
-    public void setLoanId(long loanId) {
+    public void setLoanId(int loanId) {
         Loan loan = new Loan();
         loan.setLoanId(loanId);
         this.loan = loan;

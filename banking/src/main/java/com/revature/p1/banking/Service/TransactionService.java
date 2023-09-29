@@ -22,7 +22,7 @@ public class TransactionService {
 
     // This is a hand-jammed version of this controller that handles loan transactions instead of a full transaction
     // instance.
-    public Transaction       createTransaction(Long loanId, int recipientAccountId, BigDecimal loanAmount) {
+    public Transaction       createTransaction(int loanId, int recipientAccountId, BigDecimal loanAmount) {
         Transaction transaction = new Transaction();
 
         transaction.setLoanId(loanId);

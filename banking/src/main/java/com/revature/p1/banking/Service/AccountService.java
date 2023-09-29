@@ -56,7 +56,7 @@ public class AccountService {
         Account account = new Account();
         account.setDate(new Date());            // Set the Account Decoration date (may not be needed).
         account.setBalance(aDTO.getBalance());
-        account.setUser((User) AuthController.ses.getAttribute("currUser"));
+        account.setUser(AuthController.getUser());
         return aDAO.save(account);
     }
 

@@ -8,12 +8,14 @@ import com.revature.p1.banking.Models.Loan;
 import com.revature.p1.banking.Models.Transaction;
 import com.revature.p1.banking.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +26,22 @@ public class LoanService {
     public LoanService(LoanDAO loanDAO,AccountService aServ)  {
         this.lDAO = loanDAO; }
 
-    public List<Loan> findAll(){ return lDAO.findAll();  }
+    public List<Loan> findAll(AccountService accountService){
+        User currUser = AuthController.getUser();
+        if(currUser.getRole()==(User.USER)){
+            List<Loan> result = new ArrayList<Loan>();
+            List<Account> accounts = accountService.findAll();
+            for(int i = 0;i<accounts.size();i++){
+                Loan loan = new Loan();
+                loan.setRecipientAccount(accounts.get(i));
+                Example<Loan> query = Example.of(loan);
+                result.addAll(lDAO.findAll(query));
+            }
+            return result;
+        }else{
+            return lDAO.findAll();
+        }
+    }
     public Loan save(Loan l){ return lDAO.save(l); }
     public Loan findById(int id){ return lDAO.getReferenceById(id); }
 

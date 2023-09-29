@@ -26,7 +26,7 @@ public class AccountService {
 
     public List<Account> findAll() {
         Account acc = new Account();
-        User currUser = (User) AuthController.ses.getAttribute("currUser");
+        User currUser = AuthController.getUser();
         if(currUser.getRole()==(User.USER)){
             acc.setUser(currUser);
             Example<Account> query = Example.of(acc);

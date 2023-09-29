@@ -44,4 +44,5 @@ public class TransactionService {
     }
     public Transaction       getReferenceById (int id)        { return transactionDAO.getReferenceById(id); }
     public Transaction       saveAndFlush     (Transaction t) { return transactionDAO.saveAndFlush(t);      }
+    public TransactionDAO getTransactionDAO(){ return transactionDAO;}
 }

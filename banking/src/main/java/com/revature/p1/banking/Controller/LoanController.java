@@ -27,15 +27,12 @@ public class LoanController {
     private TransactionService transactionService;
 
     @Autowired
-    public LoanController(LoanService lServ, AccountService aServ) {
+    public LoanController(LoanService lServ, AccountService aServ, TransactionService tServ) {
         this.accountService = aServ;
         this.loanService = lServ;
+        this.transactionService = tServ;
     }
-
-    @GetMapping
-    public ResponseEntity<List<Loan>> getAllLoans() {
-        return ResponseEntity.ok().body(loanService.findAll());
-    }
+    
 
     @PostMapping("{acctNum}/newLoan")
     public ResponseEntity<Object> createLoan(@RequestBody LoanDTO lDTO) {
@@ -60,6 +57,18 @@ public class LoanController {
         try {
             Transaction transaction = loanService.acceptLoan(loanId, transactionService);
             return ResponseEntity.ok(transaction);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return a 400 status code (BAD REQUEST) and error message
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+    }
+
+    @GetMapping
+    public ResponseEntity<Object> viewLoans() {
+        try {
+            return ResponseEntity.ok().body(loanService.findAll(accountService));
         } catch (Exception e) {
             e.printStackTrace();
             //return a 400 status code (BAD REQUEST) and error message

@@ -63,22 +63,22 @@ public class AccountService {
         return aDAO.save(account);
     }
 
-    public Account withdraw(BigDecimal ammount, int id,TransactionService transactionService) throws Exception {
+    public Account withdraw(BigDecimal amount, int id,TransactionService transactionService) throws Exception {
         Account acc = findByAcctNum(id);
         BigDecimal bal = acc.getBalance();
-        if(bal.compareTo(ammount) < 0){
+        if(bal.compareTo(amount) < 0){
             throw new Exception("insufficient funds");
         }
-        return deposit(ammount.negate(),id,transactionService);
+        return deposit(amount.negate(),id,transactionService);
     }
 
-    public Account deposit(BigDecimal ammount, int id,TransactionService transactionService) throws Exception {
+    public Account deposit(BigDecimal amount, int id,TransactionService transactionService) throws Exception {
         Account acc = findByAcctNum(id);
         BigDecimal bal =  acc.getBalance();
-        acc.setBalance(bal.add(ammount));
+        acc.setBalance(bal.add(amount));
         Transaction t = new Transaction();
         t.setRecipientAccountId(acc.getAccountId());
-        t.setTransactionAmount(ammount);
+        t.setTransactionAmount(amount);
         t.setTransactionDateTime(new Timestamp(System.currentTimeMillis()));
         if(transactionService.getTransactionDAO().save(t) != null){
             return aDAO.save(acc);

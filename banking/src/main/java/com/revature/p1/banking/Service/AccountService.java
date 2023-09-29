@@ -4,11 +4,14 @@ import com.revature.p1.banking.Controller.AuthController;
 import com.revature.p1.banking.DAO.AccountDAO;
 import com.revature.p1.banking.DTO.AccountDTO;
 import com.revature.p1.banking.Models.Account;
+import com.revature.p1.banking.Models.Transaction;
 import com.revature.p1.banking.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Example;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -58,6 +61,24 @@ public class AccountService {
         account.setBalance(aDTO.getBalance());
         account.setUser(AuthController.getUser());
         return aDAO.save(account);
+    }
+
+    public Account withdraw(BigDecimal ammount, int id,TransactionService transactionService) throws Exception {
+        Account acc = findByAcctNum(id);
+        BigDecimal bal = (BigDecimal) acc.getBalance();
+        if(bal.compareTo(ammount) < 0){
+            throw new Exception("insufficient funds");
+        }
+        acc.setBalance(bal.add(ammount));
+        Transaction t = new Transaction();
+        t.setRecipientAccountId(acc.getAccountId());
+        t.setTransactionAmount(ammount);
+        t.setTransactionDateTime(new Timestamp(System.currentTimeMillis()));
+        if(transactionService.getTransactionDAO().save(t) != null){
+            return aDAO.save(acc);
+        }else{
+            throw new Exception("Unable to Complete Transaction");
+        }
     }
 
 }

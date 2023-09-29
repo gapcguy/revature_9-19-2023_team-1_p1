@@ -79,7 +79,7 @@ public class AccountService {
         BigDecimal bal =  acc.getBalance();
         acc.setBalance(bal.add(amount));
         Transaction t = new Transaction();
-        t.setRecipientAccountId(acc.getAccountId());
+        t.setRecipientAccount(acc);
         t.setTransactionAmount(amount);
         t.setTransactionDateTime(new Timestamp(System.currentTimeMillis()));
         if(transactionService.getTransactionDAO().save(t) != null){

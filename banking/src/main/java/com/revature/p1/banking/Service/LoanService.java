@@ -163,7 +163,7 @@ public class LoanService {
         if (acceptHelper(currentUser, loanId)) {
             Transaction transaction = transactionService.createTransaction(
                     loanId,
-                    findById(loanId).getRecipientAccount().getAccountId(),
+                    findById(loanId).getRecipientAccount(),
                     findById(loanId).getLoanAmount()
             );
 

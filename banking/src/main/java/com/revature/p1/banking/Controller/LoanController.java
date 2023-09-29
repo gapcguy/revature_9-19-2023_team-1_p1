@@ -32,7 +32,7 @@ public class LoanController {
         this.loanService = lServ;
         this.transactionService = tServ;
     }
-    
+
 
     @PostMapping("{acctNum}/newLoan")
     public ResponseEntity<Object> createLoan(@RequestBody LoanDTO lDTO) {

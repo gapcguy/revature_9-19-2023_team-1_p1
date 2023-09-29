@@ -38,9 +38,7 @@ public class Transaction {
         this.loan = loan;
     }
 
-    public void setRecipientAccountId(int recipientAccountId) {
-        Account toAccount = new Account();
-        toAccount.setAccountId(recipientAccountId);
+    public void setRecipientAccount(Account toAccount) {
         this.toAccount = toAccount;
     }
 

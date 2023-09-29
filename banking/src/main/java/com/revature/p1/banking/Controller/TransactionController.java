@@ -2,6 +2,7 @@ package com.revature.p1.banking.Controller;
 
 
 import com.revature.p1.banking.Models.Transaction;
+import com.revature.p1.banking.Service.AccountService;
 import com.revature.p1.banking.Service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +16,13 @@ import java.util.List;
 public class TransactionController {
 
     private TransactionService tServ;
+    private AccountService aServ;
 
     @Autowired
-    public TransactionController(TransactionService tServ) { this.tServ = tServ; }
+    public TransactionController(TransactionService tServ,AccountService aServ) {
+        this.tServ = tServ;
+        this.aServ = aServ;
+    }
 
     @GetMapping
     public ResponseEntity<List<Transaction>> getAllTransactions() {
@@ -42,6 +47,17 @@ public class TransactionController {
         if (t == null ) { return ResponseEntity.noContent().build(); }
 
         return ResponseEntity.ok().body(t);
+    }
+
+    @GetMapping("/statement")
+    public ResponseEntity<Object> viewStatment(){
+        try {
+            return ResponseEntity.ok().body(tServ.viewStatement(aServ));
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return a 400 status code (BAD REQUEST) and error message
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 

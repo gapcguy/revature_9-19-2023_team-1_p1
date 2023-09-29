@@ -32,11 +32,7 @@ public class LoanController {
         this.loanService = lServ;
         this.transactionService = tServ;
     }
-
-    @GetMapping
-    public ResponseEntity<List<Loan>> getAllLoans() {
-        return ResponseEntity.ok().body(loanService.findAll(accountService));
-    }
+    
 
     @PostMapping("{acctNum}/newLoan")
     public ResponseEntity<Object> createLoan(@RequestBody LoanDTO lDTO) {

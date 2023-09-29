@@ -203,12 +203,30 @@ public class BankControllerTests {
     void testGetSpecificAccount(){
 
     }
-
+    */
     //Transactions
     @Test
     void testCreateTransaction(){
-
+        HttpRequest postRequest = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/p1/auth/login"))
+                .POST(HttpRequest.BodyPublishers.ofString("{" +
+                        "\"username\": \"test\", " +
+                        "\"password\": \"test\" }"))
+                .header("Content-Type", "application/json")
+                .build();
+        try {
+            HttpResponse response = httpClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.statusCode());
+            System.out.println(response.body());
+            assert(response.statusCode() == 200);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+    /*
 
     @Test
     void testGetTransactions(){

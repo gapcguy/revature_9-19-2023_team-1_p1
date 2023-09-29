@@ -13,7 +13,7 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long transactionId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "fromAccount",referencedColumnName = "accountId")
     private Account fromAccount;
 
@@ -22,7 +22,7 @@ public class Transaction {
     private Loan loan;
 
     // Foreign keys: TODO: EVALUATE FOR PROPER MULTIPLICITY
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "toAccount",referencedColumnName = "accountId")
     private Account toAccount;
 

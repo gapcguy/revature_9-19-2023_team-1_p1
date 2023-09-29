@@ -22,7 +22,7 @@ public class Account {
     @Column(nullable = false, unique = false)
     private BigDecimal balance;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "userId")
     private User user;
 

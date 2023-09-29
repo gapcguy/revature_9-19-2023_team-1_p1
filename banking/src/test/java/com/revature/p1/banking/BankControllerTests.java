@@ -79,7 +79,7 @@ public class BankControllerTests {
     }
 
     @Test
-    void testRegistration(){
+    void testRegistrationAndDeletion(){
         HttpRequest postRequest = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/p1/users"))
                 .POST(HttpRequest.BodyPublishers.ofString("{" +
@@ -99,26 +99,90 @@ public class BankControllerTests {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-    }
-/*
-    @Test
-    void testDeleteUser(){
 
+        HttpRequest deleteRequest = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/p1/users/2"))
+                .DELETE()
+                .build();
+
+        HttpResponse response2 = null;
+        try {
+            response2 = httpClient.send(deleteRequest, HttpResponse.BodyHandlers.ofString());
+            int status2 = response2.statusCode();
+            System.out.println(status2);
+            assert(200 == status2);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 
     //Account controller tests
     @Test
     void testCreateAccount(){
+        HttpRequest postRequest2 = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/p1/auth/login"))
+                .POST(HttpRequest.BodyPublishers.ofString("{" +
+                        "\"username\": \"test\", " +
+                        "\"password\": \"test\" }"))
+                .header("Content-Type", "application/json")
+                .build();
 
+        try {
+            HttpResponse response2 = httpClient.send(postRequest2, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            HttpRequest postRequest = HttpRequest.newBuilder()
+                    .uri(URI.create("http://localhost:8080/p1/accounts"))
+                    .POST(HttpRequest.BodyPublishers.ofString(""))
+                    .build();
+            try {
+                HttpResponse response = httpClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
+                System.out.println(response.statusCode());
+                assert (201 == response.statusCode());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        HttpRequest getRequest = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/p1/accounts"))
+                .build();
+        try {
+            HttpResponse response3 = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response3.statusCode());
+            System.out.println(response3.body());
+
+            assert(200 == response3.statusCode());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
-
-    @Test
-    void testDeleteAccount(){
-
-    }
-*/
     @Test
     void testGetAccounts(){
+        HttpRequest postRequest = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/p1/auth/login"))
+                .POST(HttpRequest.BodyPublishers.ofString("{" +
+                        "\"username\": \"test\", " +
+                        "\"password\": \"test\" }"))
+                .header("Content-Type", "application/json")
+                .build();
+
+        try {
+            HttpResponse response2 = httpClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         HttpRequest getRequest = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/p1/accounts"))
                 .build();

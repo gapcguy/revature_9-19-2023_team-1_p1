@@ -2,6 +2,7 @@ package com.revature.p1.banking.Controller;
 
 import com.revature.p1.banking.DTO.AccountDTO;
 import com.revature.p1.banking.Models.Account;
+import com.revature.p1.banking.Models.User;
 import com.revature.p1.banking.Service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,16 +49,17 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createAccount(@RequestBody AccountDTO aDto) {
+    public ResponseEntity<Object> createAccount() {
         try {
-            Account newAccount = aServ.createAccount(aDto);
+            System.out.println("hit createAccount Controller");
+            Account newAccount = aServ.createAccount();
             return ResponseEntity.status(HttpStatus.CREATED).body(newAccount);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
     }
+
 
 
 }

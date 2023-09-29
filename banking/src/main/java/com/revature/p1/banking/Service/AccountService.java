@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Example;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +19,9 @@ public class AccountService {
 
     private AccountDAO aDAO;
 
-    public AccountService() {}
+    public AccountService() {
+    }
+
     @Autowired
     public AccountService(AccountDAO aDAO) {
         this.aDAO = aDAO;
@@ -26,15 +29,14 @@ public class AccountService {
 
     public List<Account> findAll() {
         Account acc = new Account();
-        User currUser = (User) AuthController.ses.getAttribute("currUser");
-        if(currUser.getRole()==(User.USER)){
-            acc.setUser(currUser);
-            Example<Account> query = Example.of(acc);
-            return aDAO.findAll(query);
+        User currUser = AuthController.getUser();
+        System.out.println(currUser.toString());
+        if (currUser.getRole() == User.USER){
+            return aDAO.findByUser(currUser);
         }else{
             return aDAO.findAll();
         }
-        }
+    }
 
     public Account findByAcctNum(Integer acctNum) { // Use of Integer rather than int due to null check.
         if (acctNum == null) {
@@ -52,10 +54,11 @@ public class AccountService {
 
     // The createAccount method will require some explanation due to the consideration that the foreach implementation
     // *might* be as clear as mud at face value.
-    public Account createAccount(AccountDTO aDTO) {
+    public Account createAccount() {
+        System.out.println("hit create account");
         Account account = new Account();
         account.setDate(new Date());            // Set the Account Decoration date (may not be needed).
-        account.setBalance(aDTO.getBalance());
+        account.setBalance(new BigDecimal(0));
         account.setUser(AuthController.getUser());
         return aDAO.save(account);
     }

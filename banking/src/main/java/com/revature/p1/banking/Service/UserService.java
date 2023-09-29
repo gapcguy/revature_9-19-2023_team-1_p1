@@ -107,10 +107,10 @@ public class UserService {
 
         // Since we have confirmed that a user by the queried ID exists, .get is safe to call without throwing
         // NoSuchElementException;
-            User user = userOptional.get();
-            // Since the user is confirmed that it not only exists and is retrievable, account deletion can proceed.
-            userDAO.deleteById(id);
-            // we then respond with the newly-deleted user.
-            return user;
+        User user = userOptional.get();
+        // Since the user is confirmed that it not only exists and is retrievable, account deletion can proceed.
+        userDAO.deleteById(id);
+        // we then respond with the newly-deleted user.
+        return user;
     }
 }

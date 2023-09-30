@@ -1,6 +1,7 @@
 package com.revature.p1.banking.Controller;
 
 
+import com.revature.p1.banking.DTO.TransferDTO;
 import com.revature.p1.banking.Models.Transaction;
 import com.revature.p1.banking.Service.AccountService;
 import com.revature.p1.banking.Service.TransactionService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -60,6 +62,22 @@ public class TransactionController {
         }
     }
 
+    @PostMapping("/transfer")
+    public ResponseEntity<Object> transferFunds(@RequestBody TransferDTO tD) {
+
+        // Example JSON:
+        try {
+
+            int fromAcctNum = tD.getFromAcctNum();
+            int toAcctNum = tD.getToAcctNum();
+            BigDecimal amountToTransfer = tD.getTransferAmount();
+            aServ.transfer(tServ, fromAcctNum, toAcctNum, amountToTransfer);
+            return ResponseEntity.ok("Transfer successful.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
 
 }

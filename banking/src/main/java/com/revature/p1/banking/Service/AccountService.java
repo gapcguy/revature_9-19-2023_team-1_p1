@@ -89,4 +89,33 @@ public class AccountService {
         }
     }
 
+    public void transfer(TransactionService transactionService,
+                            int fromAcctNum, int toAcctNum,
+                            BigDecimal amountToTransfer)
+            throws Exception {
+
+        // Get the initial account balance.
+        Account fromAccount = findByAcctNum(fromAcctNum);
+        BigDecimal fromAccountBalance = fromAccount.getBalance();
+
+        // CompareTo is used to compare two BigDecimal objects. Essentially it will check the values of both and return
+        // a 1 for a greater-than result, a 0 for an equal-to (no difference) result, or a -1 for a less-than result.
+        // In this case, we will use this merely to check if the value held in fromAccountBalance, when compared to
+        // amountToTransfer, evaluates to true when evaluating for the expression ">= 0"
+        int fundsAvailable = fromAccountBalance.compareTo(amountToTransfer);
+
+        // Check if the source account balance (fromAccountBalance) contains the requested amount, and perform the
+        // transaction on the condition that there's enough money in the account to cover the transfer.
+        if (fundsAvailable >= 0) {
+            Account toAccount = findByAcctNum(toAcctNum);
+            // withdraw the amount from the origination account.
+            withdraw(amountToTransfer, fromAccount.getAccountId(), transactionService);
+
+            // Deposit the withdrawn funds to the destination account.
+            deposit(amountToTransfer, toAccount.getAccountId(), transactionService);
+        } else {
+            throw new Exception("Insufficient funds for transfer");
+        }
+    }
+
 }

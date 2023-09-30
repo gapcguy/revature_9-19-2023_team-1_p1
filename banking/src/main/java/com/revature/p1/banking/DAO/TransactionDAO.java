@@ -13,8 +13,8 @@ import java.util.List;
 
 @Repository
 public interface TransactionDAO extends JpaRepository<Transaction, Integer> {
-    @Query(value = "SELECT u.transactionAmount FROM Transaction u WHERE u.toAccount IN :accounts")
-    List<BigDecimal> findTransactionByAccountList(@Param("accounts") Collection<Account> accounts);
+    @Query(value = "SELECT u FROM Transaction u WHERE u.toAccount IN :accounts")
+    List<Transaction> findTransactionByAccountList(@Param("accounts") Collection<Account> accounts);
 
 
 }

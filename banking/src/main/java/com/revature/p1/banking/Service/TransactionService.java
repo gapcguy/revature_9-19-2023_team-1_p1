@@ -23,11 +23,19 @@ public class TransactionService {
     @Autowired
     public TransactionService(TransactionDAO transactionDAO)  { this.transactionDAO = transactionDAO;       }
     public List<Transaction> findAll          ()              { return transactionDAO.findAll();            }
-    public List<BigDecimal> viewStatement(AccountService accountService) throws Exception {
+    public String viewStatement(AccountService accountService) throws Exception {
         User currUser = AuthController.getUser();
         if (currUser.getRole() == (User.USER)) {
 
-            return transactionDAO.findTransactionByAccountList(accountService.findAll());
+            List<Transaction> result = transactionDAO.findTransactionByAccountList(accountService.findAll());
+
+            String statement = "=================    " + currUser.getFirstName().toUpperCase()
+                    + " "
+                    +currUser.getLastName().toUpperCase()+ "'S BANK STATEMENT     ===============\n";
+            for(int i = 0;i<result.size();i++){
+                statement+= result.get(i).toString();
+            }
+            return statement;
         }else{
             throw new Exception("Only users can view their statement");
         }

@@ -59,4 +59,12 @@ public class Transaction {
         this.transactionAmount = transactionAmount;
         this.transactionDateTime = transactionDateTime;
     }
+
+    @Override
+    public String toString() {
+        return "accountId:" + toAccount.getAccountId() +
+                "     transactionAmount:" + transactionAmount +
+                "     transactionDateTime:" + transactionDateTime +
+                "\n";
+    }
 }

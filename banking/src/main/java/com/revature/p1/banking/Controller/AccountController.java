@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
 
-@RestController
-@RequestMapping("/accounts")
-@CrossOrigin
+@RestController                  // Indicates that this class is a REST controller.
+@RequestMapping("/accounts")     // All requests to "/accounts" will be handled by methods in this class.
+@CrossOrigin                     // Allows handling of HTTP requests from different origins.
 public class AccountController {
 
-    private final AccountService aServ;
-    private final TransactionService tServ;
+    private final AccountService aServ;         // Service class for account-related operations.
+    private final TransactionService tServ;     // Service class for transaction-related operations.
 
+    // Constructor injection of AccountService and TransactionService.
     @Autowired
     public AccountController(AccountService aServ, TransactionService tServ) {
         this.aServ = aServ;
@@ -40,52 +41,93 @@ public class AccountController {
         -MBW
      */
 
+    /**
+     * Retrieves a list of all accounts
+     *
+     * @return ResponseEntity containing a list of all accounts, or an error message.
+     */
     @GetMapping
-    public ResponseEntity<List<Account>> viewAccounts() { return ResponseEntity.ok().body(aServ.findAll()); }
+    public ResponseEntity<List<Account>> viewAccounts() {
+        // Respond with an HTTP 200 response containing the list of accounts.
+        return ResponseEntity.ok().body(aServ.findAll()); }
 
+    /**
+     * Retrieves an account by its account number.
+     *
+     * @param acctNum The account number for which to search.
+     * @return ResponseEntity containing the account, or an error message.
+     */
     @GetMapping("/{acctNum}")
     public ResponseEntity<Object> getAccountByAcctNum(@PathVariable("acctNum") Integer acctNum) {
+        // Try this.
         try {
+            // Retrieve an account by its account number using the AccountService
             Account account = aServ.findByAcctNum(acctNum);
+            // Respond with an HTTP 200 response containing the account.
             return ResponseEntity.ok().body(account);
-        } catch (IllegalArgumentException e) {
+        }
+        // In the event of an exception to the above, do the following
+        catch (IllegalArgumentException e) {
+            // Call the printStackTrace exception method and respond with a bad request, outputting the
+            // exception message in the response body.
             e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
+    /**
+     * Create a new bank account.
+     * @return A ResponseEntity containing the newly created account, or an error message.
+     */
     @PostMapping
     public ResponseEntity<Object> createAccount() {
         try {
-            System.out.println("hit createAccount Controller");
+            // Create a new account using the AccountService.
             Account newAccount = aServ.createAccount();
+
+            // Respond with a successful response (HTTP 201) with the newly-created account in the response body.
             return ResponseEntity.status(HttpStatus.CREATED).body(newAccount);
-        } catch (IllegalArgumentException e) {
+        }
+        // If that doesn't work, perform the following:
+        catch (IllegalArgumentException e) {
+            // Print the exception stack trace.
             e.printStackTrace();
+            // Return a bad request response (HTTP 400) with an error message in the response body.
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-
+    /**
+     * Handle an account withdrawal request
+     * @param amount   The amount to withdraw.
+     * @param acctNum  The number of the account from which will be withdrawn
+     * @return A ResponseEntity containing the updated account, or an error message
+     */
     @PostMapping("/{acctNum}/withdraw")
-    public ResponseEntity<Object> withdraw(@RequestParam("amount") BigDecimal amount, @PathVariable("acctNum") Integer acctNum){
-        try {
-            return ResponseEntity.ok(aServ.withdraw(amount,acctNum,tServ));
-        } catch (Exception e) {
+    public ResponseEntity<Object> withdraw(
+            @RequestParam("amount") BigDecimal amount,
+            @PathVariable("acctNum") Integer acctNum) {
+        // Attempt to perform a withdrawal operation using the Account Service
+        try { return ResponseEntity.ok(aServ.withdraw(amount,acctNum,tServ)); }
+        // If that doesn't work, perform the following:
+        catch (Exception e) {
+            // Print a stack trace.
             e.printStackTrace();
+            // Return an HTTP Bad request with the message in the exception message in the response body.
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @PostMapping("/{acctNum}/deposit")
     public ResponseEntity<Object> deposit(@RequestParam("amount") BigDecimal amount, @PathVariable("acctNum") Integer acctNum){
-        try {
-            return ResponseEntity.ok(aServ.deposit(amount,acctNum,tServ));
-        } catch (Exception e) {
+        // Attempt to perform a deposit.
+        try { return ResponseEntity.ok(aServ.deposit(amount,acctNum,tServ)); }
+        // If that doesn't work, perform the following:
+        catch (Exception e) {
+            // Print a stack trace.
             e.printStackTrace();
+            // Return an HTTP Bad request with the message in the exception message in the response body.
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
-
 }

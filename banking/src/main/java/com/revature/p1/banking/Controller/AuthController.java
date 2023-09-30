@@ -16,20 +16,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RestController //a subset of the @Controller stereotype annotation. makes a class a bean, plus MVC stuff!
-@RequestMapping("/auth") //every request to 5000/p1/employee will go to this Class
-@CrossOrigin() //Configuring this annotation allows us to take in HTTP requests from different origins (FE?)
+@RestController          // Indicates that this class is a REST controller.
+@RequestMapping("/auth") // All requests to "/auth" will be handled by methods in this class.
+@CrossOrigin()           // Allows handling HTTP requests from different origins.
 public class AuthController {
 
-    //we need to AUTOWIRE the DAO, to inject it as a dependency of the controller
-    //(since we need to use its methods)
-    private UserService uServ;
-    private UserDAO uDAO;
-    public static HttpSession ses;
+    //we need to AUTOWIRE the DAO, to inject it as a dependency of the controller (since we need to use its methods).
+    private UserService uServ; // Service Class for user-related operations.
+    private UserDAO uDAO; // DAO for user data.
+    public static HttpSession ses; // Static HttpSession for storing user sessions.
 
     /**
-     * @param uServ
-     * @param uDAO
+     * Constructor for AuthController.
+     * @param uServ An instance of UserService automatically injected by Spring.
+     * @param uDAO  An instance of UserDAO automatically injected by Spring.
      */
     @Autowired //remember, spring boot will automagically inject an eDAO thanks to this annotation
     public AuthController(UserService uServ, UserDAO uDAO) {
@@ -37,23 +37,42 @@ public class AuthController {
         this.uDAO = uDAO;
     }
 
+    /**
+     * Handles HTTP POST requests to "/auth/login for user logins.
+     *
+     * @param requestBodyUser The user data provided in the request body.
+     * @param request         The HttpServletRequest object for handling requests
+     * @return ResponseEntity containing the user session/an error message
+     */
     @PostMapping("/login")
     public ResponseEntity<? extends Object> loginHandler(
             @RequestBody(required = false) User requestBodyUser,
             HttpServletRequest request) {
-        try {
 
+        // Attempt to initialize a user session.
+        try {
             User loginUser = uServ.login(requestBodyUser);
+
+            // Create a session and store the logged-in user.
             HttpSession session = request.getSession();
             session.setAttribute("currUser",loginUser);
             ses = session;
 
+            // Return a success response.
             return ResponseEntity.ok(loginUser);
+
+        // If the user session cannot be initialized:
         } catch (Exception e) {
+            // Return an HTTP 401 status (Unauthorized user).
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
 
+    /**
+     * A static method to retrieve the currently logged-in user from the session.
+     *
+     * @return The User object representing the currently logged-in user.
+     */
     public static User getUser(){
         return (User) ses.getAttribute("currUser");
     }

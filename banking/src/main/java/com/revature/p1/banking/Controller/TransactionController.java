@@ -27,9 +27,7 @@ public class TransactionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Transaction>> getAllTransactions() {
-        return ResponseEntity.ok().body(tServ.findAll());
-    }
+    public ResponseEntity<List<Transaction>> getAllTransactions() { return ResponseEntity.ok().body(tServ.findAll()); }
 
     @PostMapping
     public ResponseEntity<Transaction> newTransaction(@RequestBody Transaction t) {

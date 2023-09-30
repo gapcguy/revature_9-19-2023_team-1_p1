@@ -65,7 +65,13 @@ public class TransactionController {
     @PostMapping("/transfer")
     public ResponseEntity<Object> transferFunds(@RequestBody TransferDTO tD) {
 
-        // Example JSON:
+        /*  -- Example usage when calling (done from the request body):
+            {
+                "fromAcctNum"       : [origination account number]
+                "toAcctNum"         : [destination account number]
+                "amountToTransfer"  : [some amount]
+            }
+         */
         try {
 
             int fromAcctNum = tD.getFromAcctNum();

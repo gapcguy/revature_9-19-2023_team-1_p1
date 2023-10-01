@@ -7,11 +7,18 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table(name="account")
-@Component
+@Entity                 // Indicates that this class is a JPA entity, representing a database table.
+@Table(name="account")  // Specifies the name of the database table for this entity.
+@Component              // Marks this class as a Spring component, allowing it to be managed by Spring's IoC container.
 public class Account {
 
+    /* Variable annotation usages:
+       @Id             - Indicates that the following field is the primary key for this entity.
+       @GeneratedValue - Specifies how the primary key values are generated (in this case, auto-increment)
+       @Column         - Specifies that a variable corresponds to a database column.
+       @ManyToOne      - Defines a many-to-one relationship with the entity to which it is annotating.
+       @JoinColumn     - Specifies a foreign key column in this table.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int accountId;
@@ -27,41 +34,62 @@ public class Account {
     private User user;
 
 
+    // Getter and setter methods.
 
-    public int getAccountId() {
-        return accountId;
-    }
+    /**
+     * Getter method for retrieving the Account ID.
+     * @return an account ID.
+     */
+    public int getAccountId() { return accountId; }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
-    }
+    /**
+     * Getter method for retrieving the date.
+     * @return the date.
+     */
+    public Date getDate()     { return date; }
 
-    public Date getDate() {
-        return date;
-    }
+    /**
+     * Getter method for retrieving the balance.
+     * @return the balance.
+     */
+    public BigDecimal getBalance() { return balance; }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+    /**
+     * Getter method for retrieving the user.
+     * @return
+     */
+    public User getUser() { return user; }
 
-    public BigDecimal getBalance() {
-        return balance;
-    }
+    /**
+     * Setter method for setting the Account id
+      * @param accountId is the Account ID.
+     */
+    public void setAccountId(int accountId) { this.accountId = accountId; }
 
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
+    /**
+     * Setter method for setting the date.
+     * @param date is the Date.
+     */
+    public void setDate(Date date) { this.date = date; }
 
-    public User getUser() {
-        return user;
-    }
+    /**
+     * Setter method for setting the balance.
+     * @param balance is the balance.
+     */
+    public void setBalance(BigDecimal balance) { this.balance = balance; }
 
+    /**
+     * Setter method for setting the user.
+     * @param user is the user.
+     */
     public void setUser(User user) {
         this.user = user;
     }
 
-
-
+    /**
+     * Override the toString() builtin to provide a human-readable representation of the Account Object.
+     * @return a human-readable representation of the account object.
+     */
     @Override
     public String toString() {
         return "Account{" +
@@ -71,6 +99,4 @@ public class Account {
                 ", user=" + user +
                 '}';
     }
-
-
 }

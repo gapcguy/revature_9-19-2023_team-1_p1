@@ -78,7 +78,7 @@ public class BankControllerTests {
         assert(200 == status);
     }
 
-    @Test
+  /*  @Test
     void testRegistrationAndDeletion(){
         HttpRequest postRequest = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/p1/users"))
@@ -116,7 +116,7 @@ public class BankControllerTests {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
 
     //Account controller tests

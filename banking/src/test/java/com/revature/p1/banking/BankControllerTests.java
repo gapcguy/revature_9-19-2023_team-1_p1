@@ -83,7 +83,7 @@ public class BankControllerTests {
         HttpRequest postRequest = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/p1/users"))
                 .POST(HttpRequest.BodyPublishers.ofString("{" +
-                        "\"username\": \"test2\", " +
+                        "\"username\": \"test32322\", " +
                         "\"password\": \"test2\", " +
                         "\"firstName\": \"Jame\"," +
                         "\"lastName\": \"vidyoe\"," +

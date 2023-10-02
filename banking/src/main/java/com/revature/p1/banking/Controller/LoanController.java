@@ -38,7 +38,7 @@ public class LoanController {
      * @param lDTO  Contains loan details.
      * @return      A ResponseEntity containing the newly-created loan, or an error.
      */
-    @PostMapping("{acctNum}/newLoan")
+    @PostMapping("/newLoan")
     public ResponseEntity<Object> createLoan(@RequestBody LoanDTO lDTO) {
         try {
             // Apply for a new loan using LoanService and associate it with an account.

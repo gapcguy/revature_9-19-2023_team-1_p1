@@ -48,9 +48,9 @@ public class AccountController {
      * @return ResponseEntity containing a list of all accounts, or an error message.
      */
     @GetMapping
-    public ResponseEntity<List<Account>> viewAccounts() {
+    public ResponseEntity<String> viewAccounts() {
         // Respond with an HTTP 200 response containing the list of accounts.
-        return ResponseEntity.ok().body(aServ.findAll());
+        return ResponseEntity.ok().body(aServ.findAll().toString());
     }
 
     /**
@@ -66,7 +66,7 @@ public class AccountController {
             // Retrieve an account by its account number using the AccountService
             Account account = aServ.findByAcctNum(acctNum);
             // Respond with an HTTP 200 response containing the account.
-            return ResponseEntity.ok().body(account);
+            return ResponseEntity.ok().body(account.toString());
         }
         // In the event of an exception to the above, do the following
         catch (IllegalArgumentException e) {

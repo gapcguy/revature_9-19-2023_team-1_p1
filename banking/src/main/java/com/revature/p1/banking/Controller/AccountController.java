@@ -26,7 +26,8 @@ public class AccountController {
     @Autowired
     public AccountController(AccountService aServ, TransactionService tServ) {
         this.aServ = aServ;
-        this.tServ = tServ;}
+        this.tServ = tServ;
+    }
 
     /*  Notes regarding the structure of the endpoints here:
         We should consider maximizing the use of the base /accounts endpoint by mapping multiple
@@ -49,7 +50,8 @@ public class AccountController {
     @GetMapping
     public ResponseEntity<List<Account>> viewAccounts() {
         // Respond with an HTTP 200 response containing the list of accounts.
-        return ResponseEntity.ok().body(aServ.findAll()); }
+        return ResponseEntity.ok().body(aServ.findAll());
+    }
 
     /**
      * Retrieves an account by its account number.
@@ -77,6 +79,7 @@ public class AccountController {
 
     /**
      * Create a new bank account.
+     *
      * @return A ResponseEntity containing the newly created account, or an error message.
      */
     @PostMapping
@@ -99,8 +102,9 @@ public class AccountController {
 
     /**
      * Handle an account withdrawal request
-     * @param amount   The amount to withdraw.
-     * @param acctNum  The number of the account from which will be withdrawn
+     *
+     * @param amount  The amount to withdraw.
+     * @param acctNum The number of the account from which will be withdrawn
      * @return A ResponseEntity containing the updated account, or an error message
      */
     @PostMapping("/{acctNum}/withdraw")
@@ -108,7 +112,9 @@ public class AccountController {
             @RequestParam("amount") BigDecimal amount,
             @PathVariable("acctNum") Integer acctNum) {
         // Attempt to perform a withdrawal operation using the Account Service
-        try { return ResponseEntity.ok(aServ.withdraw(amount,acctNum,tServ)); }
+        try {
+            return ResponseEntity.ok(aServ.withdraw(amount, acctNum, tServ));
+        }
         // If that doesn't work, perform the following:
         catch (Exception e) {
             // Print a stack trace.
@@ -119,15 +125,27 @@ public class AccountController {
     }
 
     @PostMapping("/{acctNum}/deposit")
-    public ResponseEntity<Object> deposit(@RequestParam("amount") BigDecimal amount, @PathVariable("acctNum") Integer acctNum){
+    public ResponseEntity<Object> deposit(@RequestParam("amount") BigDecimal amount, @PathVariable("acctNum") Integer acctNum) {
         // Attempt to perform a deposit.
-        try { return ResponseEntity.ok(aServ.deposit(amount,acctNum,tServ)); }
+        try {
+            return ResponseEntity.ok(aServ.deposit(amount, acctNum, tServ));
+        }
         // If that doesn't work, perform the following:
         catch (Exception e) {
             // Print a stack trace.
             e.printStackTrace();
             // Return an HTTP Bad request with the message in the exception message in the response body.
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/transfer")
+    public ResponseEntity<Object> transfer(@RequestParam("toAccount") int tid, @RequestParam("fromAccount") int fid, @RequestParam("amount") BigDecimal amount) {
+        try {
+            aServ.transfer(tServ, fid, tid, amount);
+            return ResponseEntity.ok("Transferred " +amount.toString()+ " to the account specified (id = "+tid+" from id = " +fid+")");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Transfer Failed: " + e.getMessage());
         }
     }
 }

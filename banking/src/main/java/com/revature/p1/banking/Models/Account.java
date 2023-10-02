@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity                 // Indicates that this class is a JPA entity, representing a database table.
 @Table(name="account")  // Specifies the name of the database table for this entity.
@@ -99,4 +100,13 @@ public class Account {
                 ", userId=" + user.getUserId() +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return accountId == account.accountId;
+    }
+
 }

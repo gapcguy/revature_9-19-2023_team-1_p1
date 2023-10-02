@@ -1,6 +1,7 @@
 package com.revature.p1.banking.Service;
 
 import com.revature.p1.banking.Controller.AuthController;
+import com.revature.p1.banking.DAO.AccountDAO;
 import com.revature.p1.banking.DAO.TransactionDAO;
 import com.revature.p1.banking.Models.Account;
 import com.revature.p1.banking.Models.Loan;
@@ -21,13 +22,17 @@ public class TransactionService {
 
     // Declare a private variable to hold an instance of TransactionDAO
     private final TransactionDAO transactionDAO;
+    private final AccountDAO accountDAO;
 
     /**
      * Constructor with dependency injection of TransactionDAO.
      * @param transactionDAO the injected dependency.
      */
     @Autowired
-    public TransactionService(TransactionDAO transactionDAO)  { this.transactionDAO = transactionDAO;       }
+    public TransactionService(TransactionDAO transactionDAO, AccountDAO accountDAO)  {
+        this.transactionDAO = transactionDAO;
+        this.accountDAO = accountDAO;
+    }
 
     /**
      * Finds all transactions.
@@ -37,11 +42,11 @@ public class TransactionService {
 
     /**
      * Enables a statement to be created.
-     * @param accountService an instance of the account service.
+     * Enables a statement to be created.
      * @return               a formatted statement.
      * @throws Exception     notes that an active user session must be present.
      */
-    public String viewStatement(AccountService accountService) throws Exception {
+    public String viewStatement() throws Exception {
         // determine the current authorized user session based on the authentication
         User currUser = AuthController.getUser();
 
@@ -49,7 +54,7 @@ public class TransactionService {
         if (currUser.getRole() == (User.USER)) {
 
             // Gather all transactions.
-            List<Transaction> result = transactionDAO.findTransactionByAccountList(accountService.findAll());
+            List<Transaction> result = transactionDAO.findTransactionByAccountList(accountDAO.findByUser(currUser));
 
             // Create a header
             String statement = "=================    " + currUser.getFirstName().toUpperCase()

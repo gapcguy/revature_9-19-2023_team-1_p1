@@ -82,7 +82,7 @@ public class TransactionController {
     public ResponseEntity<Object> viewStatment(){
         try {
             // Retrieve a statement of transactions using the TransactionService and AccountService.
-            return ResponseEntity.ok().body(tServ.viewStatement(aServ));
+            return ResponseEntity.ok().body(tServ.viewStatement());
         } catch (Exception e) {
             // If that fails, print the stack trace and return a 400 status code (BAD REQUEST) and error message.
             e.printStackTrace();

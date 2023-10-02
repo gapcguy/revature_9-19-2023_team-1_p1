@@ -96,7 +96,7 @@ public class Account {
                 "accountId=" + accountId +
                 ", date=" + date +
                 ", balance=" + balance +
-                ", user=" + user +
+                ", userId=" + user.getUserId() +
                 '}';
     }
 }

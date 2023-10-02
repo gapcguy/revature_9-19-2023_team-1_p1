@@ -165,6 +165,9 @@ public class AccountService {
                             BigDecimal amountToTransfer)
             throws Exception {
 
+        if(amountToTransfer.compareTo(new BigDecimal(0))<0){
+            throw new Exception("Amount to transfer MUST be POSITIVE");
+        }
         // Get the initial account balance.
         Account fromAccount = findByAcctNum(fromAcctNum);
         BigDecimal fromAccountBalance = fromAccount.getBalance();

@@ -21,11 +21,11 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int loanId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "accountId")
     private Account recipientAccount;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name =  "userId")
     private User approvedBy;
 

@@ -136,13 +136,16 @@ public class Loan {
      */
     @Override
     public String toString() {
-        return "Loan{" +
-                "loanId=" + loanId +
-                ", recipientAccount=" + recipientAccount +
-                ", approvedByAccount=" + approvedBy +
-                ", loanAmount=" + loanAmount +
-                ", loanDateTime=" + loanDateTime +
-                ", approved=" + approved +
-                '}';
+        String app;
+        if(approved){
+            app = " approved";
+        }else{
+            app = " not approved";
+        }
+        return "accountId:" + recipientAccount.getAccountId() +
+                "     amount:" + loanAmount +
+                "     status:" + app +
+                "     date of application:" + loanDateTime +
+                "\n";
     }
 }

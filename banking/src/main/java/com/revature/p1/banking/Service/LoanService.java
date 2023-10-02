@@ -34,27 +34,39 @@ public class LoanService {
     public LoanService(LoanDAO loanDAO,AccountService aServ)  { this.lDAO = loanDAO; }
 
     // Method to find all loans, filtered by the user's role.
-    public List<Loan> findAll(AccountService accountService){
+    public String findAll(AccountService accountService){
         // Get the current authorized user and assign it as the current user.
         User currUser = AuthController.getUser();
 
         // If the current user is a customer, instantiate a new ArrayList and feed it all associative bank accounts.
+        List<Loan> result = new ArrayList<>();
         if(currUser.getRole()==(User.USER)){
-            List<Loan> result = new ArrayList<>();
+            result = new ArrayList<>();
             List<Account> accounts = accountService.findAll();
 
-            // For each account, get all loans associated with the account and add it to the list of loans.
-            for(int i = 0; i < accounts.size(); i++) {
-                Loan loan = new Loan();
-                loan.setRecipientAccount(accounts.get(i));
-                Example<Loan> query = Example.of(loan);
-                result.addAll(lDAO.findAll(query));
-            }
-            return result;
+            // Gather all transactions.
+            result = lDAO.findLoanByAccountList(accounts);
+
+            // Create a header
+            String statement = "=================    " + currUser.getFirstName().toUpperCase()
+                    + " "
+                    +currUser.getLastName().toUpperCase()+ "'S LOANS     ===============\n";
+
+            // Iterate through the list of transactions on the account and build the transaction table.
+            for(int i = 0; i < result.size(); i++) { statement += result.get(i).toString(); }
+            // return the completed statement.
+            return statement;
         // if the Current user is either an employee or manager, get all loans.
         } else if (currUser.getRole() == ( User.EMPLOYEE ) ||
                    currUser.getRole() == ( User.MANAGER ) )
-        { return lDAO.findAll(); }
+        { // Create a header
+            result = lDAO.findAll();
+            String statement = "=================    ALL LOANS     ===============\n";
+
+            // Iterate through the list of transactions on the account and build the transaction table.
+            for(int i = 0; i < result.size(); i++) { statement += result.get(i).toString(); }
+            // return the completed statement.
+            return statement; }
         // If the current user has no active sessions, don't return anything.
         else { return null; }
     }

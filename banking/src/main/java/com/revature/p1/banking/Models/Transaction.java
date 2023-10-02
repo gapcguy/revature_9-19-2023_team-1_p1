@@ -148,8 +148,8 @@ public class Transaction {
     @Override
     public String toString() {
         return "accountId:" + toAccount.getAccountId() +
-                "     transactionAmount:" + transactionAmount +
-                "     transactionDateTime:" + transactionDateTime +
+                "     amount:" + transactionAmount +
+                "     date:" + transactionDateTime +
                 "\n";
     }
 }

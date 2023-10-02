@@ -142,7 +142,8 @@ public class Loan {
         }else{
             app = " not approved";
         }
-        return "accountId:" + recipientAccount.getAccountId() +
+        return "loanID:"+ loanId+
+                "accountId:" + recipientAccount.getAccountId() +
                 "     amount:" + loanAmount +
                 "     status:" + app +
                 "     date of application:" + loanDateTime +

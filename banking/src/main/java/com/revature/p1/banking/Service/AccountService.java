@@ -113,10 +113,10 @@ public class AccountService {
         if(AuthController.getUser().getUserId()!=acc.getUser().getUserId()){
             throw new Exception("Cannot Withdraw from Another's Account");
         }
-        if(transactionService.getTransactionDAO().save(t) != null) {
-            // If funds are sufficient, withdraw the funds from the account.
-            return deposit(amount.negate(), id, transactionService);
-        }
+        transactionService.getTransactionDAO().save(t);
+        // If funds are sufficient, withdraw the funds from the account.
+
+        return deposit(amount.negate(), id, transactionService);
     }
 
     /**

@@ -191,7 +191,7 @@ public class LoanService {
         if (newLoan != null) {
             return newLoan;
         } else {
-            throw new Exception(" Unknown Error Ocurred While Applying");
+            throw new Exception(" Unknown Error occurred While Applying");
         }
     }
 

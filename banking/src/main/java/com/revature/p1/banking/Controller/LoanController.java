@@ -70,10 +70,10 @@ public class LoanController {
     public ResponseEntity<Object> acceptLoan(@PathVariable("loanId") int loanId) {
         try {
             // Accept a loan using the LoanService and create a transaction.
-            Transaction transaction = loanService.acceptLoan(loanId, transactionService);
+            Account account = loanService.acceptLoan(loanId, transactionService,accountService);
 
             // Respond with a successful response containing the transaction.
-            return ResponseEntity.ok(transaction);
+            return ResponseEntity.ok(account);
         } catch (Exception e) {
             // Print a stack trace.
             e.printStackTrace();

@@ -237,7 +237,7 @@ public class LoanService {
      * @throws Exception         Indicates that a user session must be present, that the user role must be
      *                           a manager, that the transaction can be created, and that the loan is accepted.
      */
-    public Transaction acceptLoan(int loanId, TransactionService transactionService) throws Exception {
+    public Account acceptLoan(int loanId, TransactionService transactionService, AccountService accountService) throws Exception {
         User currentUser = AuthController.getUser();
         if (currentUser == null) {
             throw new Exception("You must be logged in to do that.");
@@ -249,13 +249,12 @@ public class LoanService {
         }
 
         if (acceptHelper(currentUser, loanId)) {
-            Transaction transaction = transactionService.createTransaction(
-                    loanId,
-                    findById(loanId).getRecipientAccount(),
-                    findById(loanId).getLoanAmount()
-            );
+            Loan curr = findById(loanId);
+            Account acc = accountService.deposit(curr.getLoanAmount(), curr.getRecipientAccount().getAccountId(), transactionService);
 
-            if (transaction != null) { return transaction; }
+
+            if (acc!= null) {
+                return acc; }
             else { throw new Exception("Failed to create transaction"); }
         } else { throw new Exception("Failed to accept loan"); }
     }

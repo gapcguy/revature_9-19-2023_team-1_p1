@@ -99,6 +99,11 @@ public class AccountService {
         Account acc = findByAcctNum(id);
         // Get the balance of the account.
         BigDecimal bal = acc.getBalance();
+
+        Transaction t = new Transaction();
+        t.setRecipientAccount(acc);
+        t.setTransactionAmount(amount.negate());
+        t.setTransactionDateTime(new Timestamp(System.currentTimeMillis()));
         if(AuthController.getUser().getUserId()!=acc.getUser().getUserId()){
             throw new Exception("Cannot Withdraw from Another's Account");
         }

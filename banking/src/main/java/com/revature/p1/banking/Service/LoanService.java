@@ -244,7 +244,7 @@ public class LoanService {
         }
 
         // See Use case diagram for role permissions. The User *must* be a manager or employee to proceed
-        if (currentUser.getRole() != User.MANAGER || currentUser.getRole() != User.EMPLOYEE) {
+        if (currentUser.getRole() != User.MANAGER && currentUser.getRole() != User.EMPLOYEE) {
             throw new Exception("You must be a Manager to perform this action");
         }
 

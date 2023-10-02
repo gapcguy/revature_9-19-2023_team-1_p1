@@ -41,8 +41,12 @@ public class LoanController {
     @PostMapping("/newLoan")
     public ResponseEntity<Object> createLoan(@RequestBody LoanDTO lDTO) {
         try {
+            Account acc  = accountService.findByAcctNum(lDTO.getAccountId());
+            if(!accountService.findAll().contains(acc)){
+                return ResponseEntity.badRequest().body("Must Own Account to Apply for Loan");
+            }
             // Apply for a new loan using LoanService and associate it with an account.
-            Loan newLoan = loanService.apply(lDTO, accountService.findByAcctNum(lDTO.getAccountId()));
+            Loan newLoan = loanService.apply(lDTO,acc);
 
             // Return with an HTTP 200 containing the newly-created loan application.
             return ResponseEntity.ok(newLoan);

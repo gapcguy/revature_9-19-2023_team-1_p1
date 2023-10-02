@@ -28,10 +28,9 @@ public class LoanService {
     /**
      * Constructor with dependency injection of LoanDAO and AccountService.
      * @param loanDAO an instance of the LoanDAO class.
-     * @param aServ   an instance of the AccountService class. unused.
      */
     @Autowired
-    public LoanService(LoanDAO loanDAO,AccountService aServ)  { this.lDAO = loanDAO; }
+    public LoanService(LoanDAO loanDAO)  { this.lDAO = loanDAO; }
 
     // Method to find all loans, filtered by the user's role.
     public String findAll(AccountService accountService){
@@ -176,11 +175,15 @@ public class LoanService {
             throw new Exception("Must be logged in");
         }
 
+
+
+
+
         // Second check - See Use case diagram.
         // It is expected that the user is the only role that can request a loan.
         if (currentUser.getRole() != 'U') { throw new Exception("Only users can apply for loan"); }
 
-        Integer accountId = Math.toIntExact(lDTO.getAccountId());
+        Integer accountId = lDTO.getAccountId();
         BigDecimal loanAmount = lDTO.getLoanAmount();
 
         Loan newLoan = createLoanRequest(currentUser, account, loanAmount);

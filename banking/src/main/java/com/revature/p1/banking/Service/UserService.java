@@ -107,7 +107,7 @@ public class UserService {
         // Updating in spring data uses the save() method. It's not just for inserts...
         // if save() is used on an existing record, it will update the record instead of creating a new one.
             Optional<User> userFromDatabase = userDAO.findByUsername(u.getUsername());
-            if(userFromDatabase.isPresent()) { return userDAO.save(u); }
+            if(userFromDatabase.isPresent()) { return userDAO.save(userFromDatabase.get()); }
             else { throw new IllegalArgumentException("User not found."); }
     }
 

@@ -11,9 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,17 +83,13 @@ public class AuthController {
      * @param request   is an HttpServletRequest object.
      * @param response  is an HttpServletResponse object.
      */
-    @PostMapping("/logout")   // Marks the following method as a handler for HTTP post requests to the "/logout" url.
+    @PostMapping("/logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) {
-        // Creates an instance of the `SecurityContextLogoutHandler` class provided by Spring Security.
-        SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
-        // Sets a configuration property of the logoutHandler object. Configures the handler to invalidate the user's
-        // HTTP session during the logout process. Setting it to true means that the user's session will be terminated.
-        logoutHandler.setInvalidateHttpSession(true);
-        // Calls the `logout` method of the `logoutHandler` object, initiating the process. It takes 3 parameters:
-        // 1) The incoming HTTP request.
-        // 2) The outgoing HTTP response.
-        // 3) The authenticaion information for the currently authenticated user from the security context.
-        logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+        // Retrieve the session and invalidate it to log the user out.
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
     }
 }
+

@@ -93,12 +93,12 @@ public class Account {
      */
     @Override
     public String toString() {
-        return "Account{" +
+        return
                 "accountId=" + accountId +
                 ", date=" + date +
                 ", balance=" + balance +
                 ", userId=" + user.getUserId() +
-                '}';
+                '\n';
     }
 
     @Override

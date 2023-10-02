@@ -95,10 +95,17 @@ public class AccountService {
      * @throws Exception         an exception to notify the user of insufficient funds.
      */
     public Account withdraw(BigDecimal amount, int id,TransactionService transactionService) throws Exception {
+        if(amount.compareTo(new BigDecimal(0))<0){
+            throw new Exception("Cannot withdraw a negative number");
+        }
+
         // Find the account by its number and pass it to an instance of the Account class.
         Account acc = findByAcctNum(id);
         // Get the balance of the account.
         BigDecimal bal = acc.getBalance();
+
+        // Update the account balance by adding the deposited amount.
+        acc.setBalance(bal.subtract(amount));
 
         // Compare the balance of the account to the requested withdrawal amount.
         if(bal.compareTo(amount) < 0){
@@ -116,7 +123,7 @@ public class AccountService {
         transactionService.getTransactionDAO().save(t);
         // If funds are sufficient, withdraw the funds from the account.
 
-        return deposit(amount.negate(), id, transactionService);
+        return aDAO.save(acc);
     }
 
     /**
@@ -128,6 +135,9 @@ public class AccountService {
      * @throws Exception         an exception to notify the user that the account cannot be updated with the deposit.
      */
     public Account deposit(BigDecimal amount, int id,TransactionService transactionService) throws Exception {
+        if(amount.compareTo(new BigDecimal(0))<0){
+            throw new Exception("Cannot deposit a negative number");
+        }
         // Find the account by its number and pass it to an instance of the Account class.
         Account acc = findByAcctNum(id);
         // Get the balance of the account.

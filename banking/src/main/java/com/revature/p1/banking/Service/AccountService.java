@@ -99,6 +99,9 @@ public class AccountService {
         Account acc = findByAcctNum(id);
         // Get the balance of the account.
         BigDecimal bal = acc.getBalance();
+        if(AuthController.getUser().getUserId()!=acc.getUser().getUserId()){
+            throw new Exception("Cannot Withdraw from Another's Account");
+        }
 
         // Compare the balance of the account to the requested withdrawal amount.
         if(bal.compareTo(amount) < 0){

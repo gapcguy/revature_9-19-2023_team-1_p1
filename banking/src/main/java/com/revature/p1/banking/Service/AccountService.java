@@ -99,16 +99,23 @@ public class AccountService {
         Account acc = findByAcctNum(id);
         // Get the balance of the account.
         BigDecimal bal = acc.getBalance();
-        if(AuthController.getUser().getUserId()!=acc.getUser().getUserId()){
-            throw new Exception("Cannot Withdraw from Another's Account");
-        }
 
         // Compare the balance of the account to the requested withdrawal amount.
         if(bal.compareTo(amount) < 0){
             // Notify the user in the event of insufficient funds.
             throw new Exception("Insufficient funds");
         }
+
+        Transaction t = new Transaction();
+        t.setRecipientAccount(acc);
+        t.setTransactionAmount(amount.negate());
+        t.setTransactionDateTime(new Timestamp(System.currentTimeMillis()));
+        if(AuthController.getUser().getUserId()!=acc.getUser().getUserId()){
+            throw new Exception("Cannot Withdraw from Another's Account");
+        }
+        transactionService.getTransactionDAO().save(t);
         // If funds are sufficient, withdraw the funds from the account.
+
         return deposit(amount.negate(), id, transactionService);
     }
 

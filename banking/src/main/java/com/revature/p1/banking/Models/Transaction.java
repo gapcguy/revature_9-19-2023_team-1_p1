@@ -23,10 +23,6 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long transactionId;
 
-    @ManyToOne
-    @JoinColumn(name = "fromAccount",referencedColumnName = "accountId")
-    private Account fromAccount;
-
     @OneToOne
     @JoinColumn(name="loanId", referencedColumnName="loanId")
     private Loan loan;
@@ -63,7 +59,6 @@ public class Transaction {
                        BigDecimal transactionAmount,
                        Timestamp transactionDateTime) {
         this.transactionId = transactionId;
-        this.fromAccount = fromAccount;
         this.toAccount = toAccount;
         this.transactionAmount = transactionAmount;
         this.transactionDateTime = transactionDateTime;
@@ -81,7 +76,6 @@ public class Transaction {
      * The Getter method to retrieve the origination account.
      * @return the Origination account.
      */
-    public Account getFromAccount() { return fromAccount; }
 
     /**
      * The Getter method to retrieve the Loan.
@@ -140,6 +134,8 @@ public class Transaction {
     public void setTransactionDateTime(Timestamp transactionDateTime) {
         this.transactionDateTime = transactionDateTime;
     }
+
+
 
     /**
      * Override the toString() builtin to provide a human-readable representation of the Transaction Object.
